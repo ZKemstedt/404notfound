@@ -5,7 +5,7 @@ BOARDSIZE = {
 }
 
 
-class Tiles:
+class Tile:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -24,18 +24,13 @@ class Board:
         for col in range(x):
             rows = []
             for row in range(y):
-                tile = Tiles(col, row)
+                tile = Tile(col, row)
                 rows.append(tile)
                 self.tiles.append(rows)
             #print(rows)
 
     
-
-
-
-
-
-def create_board():
+def choose_board_size():
     ask_again = True
     while ask_again:
         
@@ -57,22 +52,20 @@ def create_board():
     return board
 
 
-def displayBoard(board): 
+def display_board(board): 
     
-    displayString = ''
+    display_string = ''
     for column in range(board.sizey,0,-1):
-    
         for row in range(0,board.sizex):
-            
             tile = board.tiles[row][column-1]
             tile_string = str(tile)
-            
-                      
-            displayString += f'{tile_string}   '
-        if(row != board.sizex and (column != 1)):
-            displayString += '\n'
-        
-                
-    return (displayString)
+            display_string += f'{tile_string}   '
 
-print(displayBoard(Board(4,4)))
+        if(row != board.sizex and (column != 1)):
+            display_string += '\n'
+
+    return (display_string)
+
+
+if __name__ == "__main__":
+    print(displayBoard(Board(4,4)))
