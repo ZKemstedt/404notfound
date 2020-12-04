@@ -10,10 +10,11 @@ def displayBoard(board):    #insert xx 2d array and return
     for i in range(columns,0,-1):
         for j in range(row):
             tempstring += 'X' + ' '
-            if(j == row - 1):
+            if(j == row - 1) and (i != 1):
                 tempstring += '\n'
+                print(i)
                 
                 
     return tempstring
 
-displayBoard(board)
+print(displayBoard(board))
