@@ -11,8 +11,8 @@ class Tiles:
         self.y = y
 
     def __str__(self):
-        ab = 'X'
-        return ab
+        
+        return 'X'
 
 
 class Board:
@@ -56,14 +56,14 @@ def create_board():
     return board
 
 
-
-def displayBoard(board):    #insert xx 2d array and return 
+def displayBoard(board): 
     
     tempstring = ''
-    for column in range(int(board.sizey),0,-1):
+    for column in range(board.sizey,0,-1):
     
-        for row in range(0,int(board.sizex)):
-            tile = Tiles(row,column-1)
+        for row in range(0,board.sizex):
+            
+            tile = board.tiles
             tile_string = str(tile)
             
                       
@@ -73,4 +73,4 @@ def displayBoard(board):    #insert xx 2d array and return
                 
     return (tempstring)
 
-print(displayBoard(Board(5,5)))
+print(displayBoard(Board(4,4)))
