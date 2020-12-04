@@ -15,6 +15,8 @@ def choose_character_type():
 
         if choice in correct_answer:
             return choice
+        else:
+            print(error)
 
 
 class Character(object):
