@@ -2,6 +2,7 @@ import random
 
 
 def choose_character_type():
+    correct_answer = [1, 2, 3]
     error = ('You can only enter 1, 2 or 3')
     while True:
         try:
@@ -9,19 +10,13 @@ def choose_character_type():
                 'Choose character type.\n'
                 '(1) Knight, (2) Wizard or (3) Thief.\n'
                 ))
-        except TypeError:
-            print(error)
-            continue
         except ValueError:
             print(error)
-            continue
 
-        if choice < 0 or choice > 3:
+        if choice in correct_answer:
+            return choice
+        else:
             print(error)
-            continue
-        break
-
-    return choice
 
 
 class Character(object):
