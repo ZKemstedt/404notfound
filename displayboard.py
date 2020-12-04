@@ -1,20 +1,19 @@
-board = [[1,2,3],[4,5,6],[7,8,9]]
+from board import Board,Tiles
 
-
-
-def displayBoard(board):    #insert xx 2d array and return 
-    tempstring = ''
-    columns = len(board[0])
-    row = len(board)
+def displayBoard(board):    #Insert board object and return string 
     
-    for i in range(columns,0,-1):
-        for j in range(row):
-            tempstring += 'X' + ' '
-            if(j == row - 1) and (i != 1):
-                tempstring += '\n'
-                print(i)
+    tempstring = ''
+    for column in range(int(board.sizey),0,-1): #Starts topleft
+    
+        for row in range(0,int(board.sizex)):
+            tile = Tiles(row,column-1)
+            tile_string = str(tile)
+            
+                      
+            tempstring += f'{tile_string}   '
+        tempstring += '\n'
+        
                 
-                
-    return tempstring
+    return (tempstring)
 
-print(displayBoard(board))
+displayBoard(Board(5,5))

@@ -10,6 +10,10 @@ class Tiles:
         self.x = x
         self.y = y
 
+    def __str__(self):
+        ab = 'X'
+        return ab
+
 
 class Board:
     def __init__(self, x, y):
@@ -22,7 +26,10 @@ class Board:
             for row in range(y):
                 tile = Tiles(col, row)
                 rows.append(tile)
-            print(rows)
+            #print(rows)
+
+    
+
 
 
 
@@ -47,3 +54,23 @@ def create_board():
     x, y = BOARDSIZE[diffpick]
     board = Board(x, y)
     return board
+
+
+
+def displayBoard(board):    #insert xx 2d array and return 
+    
+    tempstring = ''
+    for column in range(int(board.sizey),0,-1):
+    
+        for row in range(0,int(board.sizex)):
+            tile = Tiles(row,column-1)
+            tile_string = str(tile)
+            
+                      
+            tempstring += f'{tile_string}   '
+        tempstring += '\n'
+        
+                
+    return (tempstring)
+
+print(displayBoard(Board(5,5)))
