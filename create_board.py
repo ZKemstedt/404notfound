@@ -1,3 +1,10 @@
+BOARDSIZE = {
+    '1': (4, 4),
+    '2': (5, 5),
+    '3': (8, 8) 
+}
+
+
 class Tiles:
     def __init__(self, x, y):
         self.x = x
@@ -5,32 +12,38 @@ class Tiles:
 
 
 class Board:
-    def __init__(self):
-        self.sizex = 0
-        self.sizey = 0
+    def __init__(self, x, y):
+        self.sizex = x
+        self.sizey = y
+        self.tiles = []
 
-    def boardsize(self, x, y):
-        for i in range(x):
-            for j in range(y):
-                tiles = Tiles(i, j)
-                self.boardcord.append(tiles)
-        global sizex
-        global sizey
-        sizex = x
-        sizey = y
+        for col in range(x):
+            rows = []
+            for row in range(y):
+                tile = Tiles(col, row)
+                rows.append(tile)
+            print(rows)
 
-    def board_choice(self):
-        diffpick = input('Choose difficulty!\n[1] Easy\n[2] Medium\n[3] Hard\n')
+
+
+
+def create_board():
+    ask_again = True
+    while ask_again:
+        
+        diffpick = input('Choose boardsize!\n[1] Small\n[2] Medium\n[3] Large\n')
+        ask_again = False
+        
         if diffpick == '1':
-            self.boardsize(4, 4)
             print("You created a 4x4 board!\n")
         elif diffpick == '2':
-            self.boardsize(5, 5)
             print("You created a 5x5 board!\n")
         elif diffpick == '3':
-            self.boardsize(8, 8)
             print("You created a 8x8 board!\n")
         else:
+            ask_again = True
             print("Invalid selection")
 
-        print()
+    x, y = BOARDSIZE[diffpick]
+    board = Board(x, y)
+    return board
