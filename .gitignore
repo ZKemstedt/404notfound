@@ -13,3 +13,6 @@ __pycache__/
 
 # Windows Metadata file
 desktop.ini
+
+# VSCode lokal settings
+.vscode/settings.json
