@@ -7,6 +7,3 @@
 # Load character
 # Save character
 #
-# < these can go in either game.py or __main__.py, you get to choose :) >
-# Select boardsize ?
-# Select startposition ?
