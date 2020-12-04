@@ -59,7 +59,7 @@ def create_board():
 
 def displayBoard(board): 
     
-    tempstring = ''
+    displayString = ''
     for column in range(board.sizey,0,-1):
     
         for row in range(0,board.sizex):
@@ -68,11 +68,11 @@ def displayBoard(board):
             tile_string = str(tile)
             
                       
-            tempstring += f'{tile_string}   '
+            displayString += f'{tile_string}   '
         if(row != board.sizex and (column != 1)):
-            tempstring += '\n'
+            displayString += '\n'
         
                 
-    return (tempstring)
+    return (displayString)
 
 print(displayBoard(Board(4,4)))
