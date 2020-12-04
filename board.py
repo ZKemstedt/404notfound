@@ -26,6 +26,7 @@ class Board:
             for row in range(y):
                 tile = Tiles(col, row)
                 rows.append(tile)
+                self.tiles.append(rows)
             #print(rows)
 
     
@@ -63,12 +64,13 @@ def displayBoard(board):
     
         for row in range(0,board.sizex):
             
-            tile = board.tiles
+            tile = board.tiles[row][column-1]
             tile_string = str(tile)
             
                       
             tempstring += f'{tile_string}   '
-        tempstring += '\n'
+        if(row != board.sizex and (column != 1)):
+            tempstring += '\n'
         
                 
     return (tempstring)
