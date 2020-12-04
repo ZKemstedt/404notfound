@@ -14,8 +14,10 @@
 #   Exit
 #   
 
+
 def enter_character_name():
     name = input('Enter the characters name: ')
+
 
 def choose_start_position()
     choose_position = input("Choose from where you want to start game:\n 1.Top left \n 2.Top right \n 3.Bottom left \n 4.Bottom right")
