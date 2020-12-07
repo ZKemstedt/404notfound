@@ -26,23 +26,22 @@ def load_yaml() -> dict:
         print('File not found.')
 
 
+def write_yaml(data) -> None:
+    try:
+        with data_path.open(mode='w', encoding='UTF-8') as f:
+            yaml.dump(data, f)
+    except FileNotFoundError:
+        print('File not found. Creating..')
+
+
 def check_name_exists(key: str) -> bool:
-    """[summary]
-
-    Args:
-        key (str): [name of player]
-        file_data (dict): [loaded yaml file]
-
-    Returns:
-        bool: [true or false if name exists in loaded yaml file]
-    """
     file_data = load_yaml()
     if key in file_data:
         return True
     return False
 
 
-def load_character(name: str, loaded_yaml: dict) -> object:  # double annotations ? None
+def load_character(name: str) -> object:  # double annotations ? None
     """[loads character, creates character object]
 
     Args:
@@ -53,6 +52,7 @@ def load_character(name: str, loaded_yaml: dict) -> object:  # double annotation
         object: [character object]
     """
     try:
+        loaded_yaml = load_yaml()
         if check_name_exists(name):
             result = loaded_yaml.get(name)
             result_class = result.get('class')
@@ -65,11 +65,11 @@ def load_character(name: str, loaded_yaml: dict) -> object:  # double annotation
             elif result_class == 'Thief':
                 user_character = Thief(name)
                 return user_character
-    except:
-        pass
+    except Exception as e:
+        print('Error: ' + e)
 
 
-def save_data(current_user: str, character_info: dict, loaded_yaml) -> None:
+def save_data(current_user: str, character_info: dict) -> None:
     """[summary]
 
     Args:
@@ -77,29 +77,28 @@ def save_data(current_user: str, character_info: dict, loaded_yaml) -> None:
         character_info (dict): [exported character_info] 
         loaded_yaml ([type]): [loaded data from yaml]
     """
+    loaded_yaml = load_yaml()
     if check_name_exists(current_user):
-        answer_yes = ['Y', 'y']
-        answer_no = ['N', 'n']
-        error = ('You can only enter Y or N')
+        answer_yes = ['y']
+        answer_no = ['n']
+        error = ('You can only enter y or n')
         while True:
             try:
-                choice = str(input(
-                    'User exists. Overwrite? Yes = Y, No = N\n'
-                    ))
+                choice = input(
+                    'User exists. Overwrite? Yes = y, No = n\n'
+                    )
             except ValueError:
                 print(error)
 
-            if choice in answer_yes:
+            if choice.lower() in answer_yes:
                 loaded_yaml.update(character_info)
-                with data_path.open(mode='w', encoding='UTF-8') as f:
-                    yaml.dump(loaded_yaml, f)
-                    break
-            elif choice in answer_no:
+                write_yaml(loaded_yaml)
+                break
+            elif choice.lower() in answer_no:
                 break
     else:
         loaded_yaml.update(character_info)
-        with data_path.open(mode='w', encoding='UTF-8') as f:
-            yaml.dump(loaded_yaml, f)
+        write_yaml(loaded_yaml)
 
 
 # EXAMPLE USAGE
