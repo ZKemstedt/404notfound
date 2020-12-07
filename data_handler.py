@@ -1,18 +1,18 @@
 import yaml
 from pathlib import Path
-from app.character import Wizard, Knight, Thief
+from app.character import Wizard, Knight, Thief, Character
 
 
 FILENAME = 'data.yml'
 data_path = Path(FILENAME)
 
 
-def export_character_info(characterinstance: object) -> dict:
-    user_class = characterinstance.__class__.__name__
+def export_character_info(character: Character) -> dict:
+    user_class = character.__class__.__name__
     character_info = {}
-    name = getattr(characterinstance, 'name')
-    health = getattr(characterinstance, 'health')
-    #  treasure = getattr(characterinstance, 'treasure') NOT YET
+    name = getattr(character, 'name')
+    health = getattr(character, 'health')
+    #  treasure = getattr(character, 'treasure') NOT YET
     character_info[name] = {'class': user_class, 'health': health}
     return character_info
 
@@ -41,12 +41,11 @@ def check_name_exists(key: str) -> bool:
     return False
 
 
-def load_character(name: str) -> object:  # double annotations ? None
+def load_character(name: str) -> object:
     """[loads character, creates character object]
 
     Args:
         name (str): [name of character]
-        loaded_yaml (dict): [loaded data from yaml]
 
     Returns:
         object: [character object]
@@ -69,16 +68,15 @@ def load_character(name: str) -> object:  # double annotations ? None
         print('Error: ' + e)
 
 
-def save_data(current_user: str, character_info: dict) -> None:
+def save_data(character: Character, character_info: dict) -> None:
     """[summary]
 
     Args:
-        current_user (str): [current object.name as str]
-        character_info (dict): [exported character_info] 
-        loaded_yaml ([type]): [loaded data from yaml]
+        character (Character): [current character object]
+        character_info (dict): [exported character_info]
     """
     loaded_yaml = load_yaml()
-    if check_name_exists(current_user):
+    if check_name_exists(character.name):
         answer_yes = ['y']
         answer_no = ['n']
         error = ('You can only enter y or n')
@@ -99,10 +97,3 @@ def save_data(current_user: str, character_info: dict) -> None:
     else:
         loaded_yaml.update(character_info)
         write_yaml(loaded_yaml)
-
-
-# EXAMPLE USAGE
-# new_char = Wizard('testas')
-# exported_char = export_character_info(new_char)
-# loaded_yaml = load_yaml()
-# save_data(new_char.name, exported_char, loaded_yaml)
