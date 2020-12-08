@@ -1,24 +1,6 @@
 import random
 
 
-def choose_character_type():
-    correct_answer = [1, 2, 3]
-    error = ('You can only enter 1, 2 or 3')
-    while True:
-        try:
-            choice = int(input(
-                'Choose character type.\n'
-                '(1) Knight, (2) Wizard or (3) Thief.\n'
-                ))
-        except ValueError:
-            print(error)
-
-        if choice in correct_answer:
-            return choice
-        else:
-            print(error)
-
-
 class Character(object):
     def __init__(self, name, initiative, health, power, evasion):
         self.name = name

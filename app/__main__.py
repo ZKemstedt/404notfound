@@ -136,6 +136,24 @@ def enter_character_name():
     return name
 
 
+def choose_character_type():
+    correct_answer = [1, 2, 3]
+    error = ('You can only enter 1, 2 or 3')
+    while True:
+        try:
+            choice = int(input(
+                'Choose character type.\n'
+                '(1) Knight, (2) Wizard or (3) Thief.\n'
+                ))
+        except ValueError:
+            print(error)
+
+        if choice in correct_answer:
+            return choice
+        else:
+            print(error)
+
+
 def choose_start_position():
     choose_position = input("Choose from where you want to start game:\n 1.Top left \n 2.Top right \n 3.Bottom left \n 4.Bottom right")
 
