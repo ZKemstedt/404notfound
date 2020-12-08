@@ -3,6 +3,7 @@
 .venv/
 .ENV/
 .VENV/
+venv
 
 # Mac OS Metadata File
 .DS_Storage
