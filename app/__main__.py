@@ -53,7 +53,7 @@ def user_choice(
         prompt (str): optional, the string used when prompting the user for input. Defaults to `> `
         invalid (str): optionl, if set; return said value when the user enters an invalid choice.
         exception (str): optional, if set; return said value when the user raises `KeyboardInterrupt`.
-        error_string (str): optional, if set; print said value when the user enters an invalid choice.
+        error_string (str): optional, string to print when the user enters an invalid choice.
 
     Returns:
         choice (str): one of the specified correct choices
