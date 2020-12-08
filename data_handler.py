@@ -1,5 +1,6 @@
 import yaml
 from pathlib import Path
+
 from app.character import Wizard, Knight, Thief, Character
 
 
@@ -69,24 +70,24 @@ def save_data(character: Character, character_info: dict) -> None:
     """
     loaded_yaml = load_yaml()
     if check_name_exists(character.name):
-        answer_yes = ['y']
-        answer_no = ['n']
-        error = ('You can only enter y or n')
         while True:
             try:
                 choice = input(
                     'User exists. Overwrite? Yes = y, No = n\n'
                     ).lower()
-            except:
-                print(error)
+            except KeyboardInterrupt:
+                break
 
-            if choice in answer_yes:
+            if choice == 'y':
                 loaded_yaml.update(character_info)
                 write_yaml(loaded_yaml)
                 break
-            elif choice in answer_no:
+            elif choice == 'n':
                 break
     else:
         loaded_yaml.update(character_info)
         write_yaml(loaded_yaml)
 
+
+if __name__ == "__main__":
+    pass
