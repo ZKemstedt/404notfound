@@ -1,14 +1,22 @@
-
-# Launcher
-#
 # Menus and interactions before the game starts and after the game ends
 #
-# Main Menu
-# Load character
-# Save character
+# [ App start ]
 #
+# Main Menu
+#   New Character
+#   Load Character
+#       Setup Game Loop
+#       -> Setup Character
+#       -> Setup Board
+#       -> Place Character
+#       Run Game Loop
+#       -> [ stuff ]
+#       Game Loop End
+#   Save Character
+#   Exit Game
+#
+# [ App End ]
 
-# Dungeon Run
 from typing import Tuple, List, Optional
 
 TITLE = """
@@ -87,22 +95,7 @@ def user_choice(
 
 
 def main_menu():
-    print("""
-         __________                                                                            __
-        |    __     \\   ___    ___  ____      __    ________   ________  ___    ___  ____     |  |
-        |   |   \\    \\ |   |  |   ||     \\   |  |  /   _____\\ |   _____||   |  |   ||     \\   |  |
-        |   |    |    ||   |  |   ||  |\\  \\  |  | /  /   ___  |  |____  |   |  |   ||  |\\  \\  |  |
-        |   |   /    / |   |  |   ||  | \\  \\ |  ||   |  |_  | |   ____| |   |  |   ||  | \\  \\ |  |
-        |    --     /  |   |__|   ||  |  \\  \\|  | \\   \\__/  / |  |_____ |   |__|   ||  |  \\  \\|  |
-         ----------     \\________/ |__|   \\_____|   \\______/  |________| \\________/ |__|   \\_____|
-                                 ______    ___    ___  ____      __
-                                |   __  \\ |   |  |   ||     \\   |  |
-                                |  |  |  ||   |  |   ||  |\\  \\  |  |
-                                |   --  / |   |  |   ||  | \\  \\ |  |
-                                |  |\\   \\ |   |__|   ||  |  \\  \\|  |
-                                |__| \\___\\ \\________/ |  |   \\_____|
-                                                      |__|
-            """)
+    print(TITLE)
     menu_loop = True
     while menu_loop:
         try:
@@ -132,7 +125,7 @@ def create_character():
 
 if __name__ == "__main__":
 
-    # This is a Main Menu Example
+    # This is an alternative Main Menu Example
     choices = [
         ('1', 'New Character'),
         ('2', 'Load Character'),
