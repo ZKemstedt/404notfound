@@ -51,11 +51,11 @@ def choose_board_size():
     return board
 
 
-def display_board(board): 
+def display_board(board):
 
     display_string = ''
-    for column in range(board.sizey,0,-1):
-        for row in range(0,board.sizex):
+    for column in range(board.sizey, 0, -1):
+        for row in range(0, board.sizex):
             tile = board.tiles[row][column-1]
             tile_string = str(tile)
             display_string += f'{tile_string}   '
@@ -67,4 +67,4 @@ def display_board(board):
 
 
 if __name__ == "__main__":
-    print(displayBoard(Board(4,4)))
+    print(display_board(Board(4, 4)))
