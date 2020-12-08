@@ -11,9 +11,27 @@
 # Dungeon Run
 from typing import Tuple, List, Optional
 
+TITLE = """
+        __________                                                                            __
+    |    __     \\   ___    ___  ____      __    ________   ________  ___    ___  ____     |  |
+    |   |   \\    \\ |   |  |   ||     \\   |  |  /   _____\\ |   _____||   |  |   ||     \\   |  |
+    |   |    |    ||   |  |   ||  |\\  \\  |  | /  /   ___  |  |____  |   |  |   ||  |\\  \\  |  |
+    |   |   /    / |   |  |   ||  | \\  \\ |  ||   |  |_  | |   ____| |   |  |   ||  | \\  \\ |  |
+    |    --     /  |   |__|   ||  |  \\  \\|  | \\   \\__/  / |  |_____ |   |__|   ||  |  \\  \\|  |
+        ----------     \\________/ |__|   \\_____|   \\______/  |________| \\________/ |__|   \\_____|
+                                ______    ___    ___  ____      __
+                            |   __  \\ |   |  |   ||     \\   |  |
+                            |  |  |  ||   |  |   ||  |\\  \\  |  |
+                            |   --  / |   |  |   ||  | \\  \\ |  |
+                            |  |\\   \\ |   |__|   ||  |  \\  \\|  |
+                            |__| \\___\\ \\________/ |  |   \\_____|
+                                                    |__|
+        """
+
 
 def user_choice(
     menu_items: List[Tuple[str, str]],
+    *,
     above: Optional[str] = '\n',
     below: Optional[str] = '\n',
     separator: Optional[str] = '\n',
@@ -102,5 +120,30 @@ def main_menu():
             print('\n\n\t\t\tYou can only enter an integer!\n\n')
 
 
-if __name__ == "__main__":
+def load_character():
     pass
+
+
+def create_character():
+    pass
+
+
+def game_loop():  # this is just an example, does not represent final flow
+    pass
+
+
+if __name__ == "__main__":
+    choices = [
+        ('1', 'New Character'),
+        ('2', 'Load Character'),
+        ('3', 'Exit Game'),
+    ]
+    choice = user_choice(choices, above=TITLE, exception='3')
+    if choice == '1':
+        character = create_character()
+    elif choice == '2':
+        character = load_character()
+    if choice == '3':
+        exit()
+    else:
+        game_loop(character)
