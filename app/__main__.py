@@ -42,4 +42,3 @@ def main_menu():
                 return menu_choice
         except ValueError:
             print('\n\n\t\t\tYou can only enter an integer!\n\n')
-main_menu()
