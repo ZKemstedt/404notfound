@@ -22,6 +22,8 @@ def write_yaml(data) -> None:
             yaml.dump(data, f)
     except FileNotFoundError:
         print('File not found. Creating..')
+        with data_path.open(mode='w+', encoding='UTF-8') as f:
+            yaml.dump(data, f)
 
 
 def check_name_exists(key: str) -> bool:
