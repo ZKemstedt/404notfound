@@ -61,14 +61,12 @@ def load_character(name: str) -> object:
         print('Error: ' + e)
 
 
-def save_data(character: Character, character_info: dict) -> None:
-    """[Saves Character object]
+def save_data(character: Character) -> None:
+    """Saves a `Character` object
 
     Args:
-        character (Character): [current character object]
-        character_info (dict): [exported character_info]
+        character (Character): The `Character` object to save
     """
-    loaded_yaml = load_yaml()
     if check_name_exists(character.name):
         while True:
             try:
@@ -76,17 +74,14 @@ def save_data(character: Character, character_info: dict) -> None:
                     'User exists. Overwrite? Yes = y, No = n\n'
                     ).lower()
             except KeyboardInterrupt:
+                return
+            if choice == 'n':
+                return
+            elif choice == 'y':
                 break
-
-            if choice == 'y':
-                loaded_yaml.update(character_info)
-                write_yaml(loaded_yaml)
-                break
-            elif choice == 'n':
-                break
-    else:
-        loaded_yaml.update(character_info)
-        write_yaml(loaded_yaml)
+    data = load_yaml()
+    data.update(character.export())
+    write_yaml(data)
 
 
 if __name__ == "__main__":
