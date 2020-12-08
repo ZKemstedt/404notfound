@@ -30,6 +30,12 @@ class Character(object):
     def special_power(self):
         raise NotImplementedError("Must be implemented!")
 
+    def export_character_info(self) -> dict:
+        user_class = self.__class__.__name__
+        character_info = {}
+        character_info[self.name] = {'class': user_class, 'health': self.health}
+        return character_info
+
 
 class Knight(Character):
     def __init__(self, name):
