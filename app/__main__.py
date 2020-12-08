@@ -128,11 +128,9 @@ def create_character():
     pass
 
 
-def game_loop():  # this is just an example, does not represent final flow
-    pass
-
-
 if __name__ == "__main__":
+
+    # This is a Main Menu Example
     choices = [
         ('1', 'New Character'),
         ('2', 'Load Character'),
@@ -146,4 +144,5 @@ if __name__ == "__main__":
     if choice == '3':
         exit()
     else:
-        game_loop(character)
+        pass
+        # setup the game and run it
