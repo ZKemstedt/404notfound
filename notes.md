@@ -11,3 +11,9 @@ After some discussion we decided to break the items down into many very (very) s
 Once we got started with the sprint I felt like it was going very smoothly, this might be because the tasks we made were very small and we probably didn't do enouugh of them
 
 I think we could have made more tasks.
+
+# Quick Scribbles - towards end of minisprint
+## Todo
+* Trello - Planyway?
+
+* Code Infrastructure
