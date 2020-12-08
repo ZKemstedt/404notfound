@@ -85,7 +85,7 @@ def save_data(character: Character, character_info: dict) -> None:
                 choice = input(
                     'User exists. Overwrite? Yes = y, No = n\n'
                     )
-            except ValueError:
+            except:
                 print(error)
 
             if choice.lower() in answer_yes:
