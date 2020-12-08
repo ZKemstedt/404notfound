@@ -121,11 +121,13 @@ def main_menu():
 
 
 def load_character():
-    pass
+    print('(example) [Control Flow] Main Menu -> load_character')
+    return 'example'
 
 
 def create_character():
-    pass
+    print('(example) [Control Flow] Main Menu -> create_character')
+    return 'example'
 
 
 if __name__ == "__main__":
@@ -142,7 +144,8 @@ if __name__ == "__main__":
     elif choice == '2':
         character = load_character()
     if choice == '3':
+        print('(example) [Control Flow] Main Menu -> exit')
         exit()
     else:
-        pass
+        print('(example) [Control Flow] Main Menu -> \"Setup Board\"')
         # setup the game and run it
