@@ -7,16 +7,6 @@ FILENAME = 'data.yml'
 data_path = Path(FILENAME)
 
 
-def export_character_info(character: Character) -> dict:
-    user_class = character.__class__.__name__
-    character_info = {}
-    name = getattr(character, 'name')
-    health = getattr(character, 'health')
-    #  treasure = getattr(character, 'treasure') NOT YET
-    character_info[name] = {'class': user_class, 'health': health}
-    return character_info
-
-
 def load_yaml() -> dict:
     try:
         with data_path.open(mode='r', encoding='UTF-8') as f:
@@ -84,15 +74,15 @@ def save_data(character: Character, character_info: dict) -> None:
             try:
                 choice = input(
                     'User exists. Overwrite? Yes = y, No = n\n'
-                    )
+                    ).lower()
             except:
                 print(error)
 
-            if choice.lower() in answer_yes:
+            if choice in answer_yes:
                 loaded_yaml.update(character_info)
                 write_yaml(loaded_yaml)
                 break
-            elif choice.lower() in answer_no:
+            elif choice in answer_no:
                 break
     else:
         loaded_yaml.update(character_info)
