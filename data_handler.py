@@ -59,7 +59,7 @@ def load_character(name: str) -> object:
 
 
 def save_data(character: Character, character_info: dict) -> None:
-    """[summary]
+    """[Saves Character object]
 
     Args:
         character (Character): [current character object]
@@ -87,3 +87,4 @@ def save_data(character: Character, character_info: dict) -> None:
     else:
         loaded_yaml.update(character_info)
         write_yaml(loaded_yaml)
+
