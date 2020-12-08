@@ -11,7 +11,7 @@
 
 #     def special_power(self):
 #         raise NotImplementedError('Must be implemented!')
-    
+
 #     def attack(self):
 #         pass
 
@@ -23,10 +23,10 @@
 
 #     def __init__(self, name):
 #         super().__init__(name, 4, 5, 9, 6)
-    
+
 #     def special_power(self):
 #         print("ljusken lol")
-    
+
 #     def flee(self):
 #         self.special_power()
 
@@ -35,13 +35,11 @@
 
 #     def __init__(self, name):
 #         super().__init__(name, 9, 4, 6, 5)
-    
+
 #     def special_power(self):
 #         print('block')
 
 
-
-#
 #
 #
 #
@@ -77,4 +75,3 @@ with p.open(mode='w', encoding="UTF-8") as f:
 
 with p.open(mode='r', encoding="UTF-8") as f:
     data = yaml.load(f)
-
