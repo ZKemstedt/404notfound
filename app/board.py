@@ -18,24 +18,20 @@ class Board:
             for row in range(y):
                 tile = Tile(col, row)
                 rows.append(tile)
-                self.tiles.append(rows)
-            # print(rows)
+            self.tiles.append(rows)
 
-
-def display_board(board):
-
-    display_string = ''
-    for column in range(board.sizey, 0, -1):
-        for row in range(0, board.sizex):
-            tile = board.tiles[row][column-1]
-            tile_string = str(tile)
-            display_string += f'{tile_string}   '
-
-        if(row != board.sizex and (column != 1)):
+    def __str__(self) -> str:
+        display_string = ''
+        for column in range(self.sizey, 0, -1):
+            for row in range(0, self.sizex):
+                tile = self.tiles[row][column-1]
+                tile_string = str(tile)
+                display_string += f'{tile_string}   '
             display_string += '\n'
 
-    return (display_string)
+        return (display_string)
 
 
 if __name__ == "__main__":
-    print(display_board(Board(4, 4)))
+    board = Board(4, 4)
+    print(board)
