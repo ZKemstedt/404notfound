@@ -15,10 +15,13 @@
 #   Exit Game
 #
 # [ App End ]
-from app.board import Board, BOARDSIZE
-from app.character import Character
+from typing import Tuple, Union
+
+from app.board import Board, BOARDSIZE, Tile
+from app.character import Character, Wizard, Thief, Knight
 from app.helpers import user_choice
 from app.save_load_data import load_character, save_character
+from app.game import game_loop
 
 TITLE = """
         __________                                                                            __
@@ -63,16 +66,25 @@ def main_menu():
 #
 # ###################################################################
 
-# Placeholder
-def load_character():
-    print('(example) [Control Flow] Main Menu -> load_character')
-    return 'example'
+def setup_character(is_new: bool) -> Union[Character, None]:
+    print('[Control Flow] [Setup Character] setup_character')
+    name = enter_character_name()
+    if is_new:
+        choice = choose_character_type()
+        character = create_character(choice, name)
+    else:
+        character = load_character(name)
+    return character
 
 
-# Placeholder
-def create_character():
-    print('(example) [Control Flow] Main Menu -> create_character')
-    return 'example'
+def create_character(choice: int, name: str) -> Character:
+    # print('[Control Flow] [Setup Character] create_character')
+    choice_to_class = {
+        1: Knight,
+        2: Wizard,
+        3: Thief
+    }
+    return choice_to_class[choice](name)
 
 
 def enter_character_name():
@@ -103,16 +115,20 @@ def choose_character_type():
 # Setup Board
 #
 # ###################################################################
-def setup_board(character: Character):
+def setup_board(character: Character) -> Tuple[Board, Tile]:
     """Game Flow - Setup Board"""
     print('[Control Flow] [Main Menu] setup_board')
-    board = select_board_size()
-    select_start_position(board, character)
-    return board
+    # board
+    boardsize = select_board_size()
+    board = Board(*boardsize)
+    # place player
+    start_tile = select_start_position(board, character)
+    start_tile.place_character(character)
+    return board, start_tile
 
 
 def select_board_size():
-    print('[Control Flow] [Setup Board] select_board_size')
+    # print('[Control Flow] [Setup Board] select_board_size')
     ask_again = True
     while ask_again:
 
@@ -129,12 +145,10 @@ def select_board_size():
             ask_again = True
             print("Invalid selection")
 
-    x, y = BOARDSIZE[diffpick]
-    board = Board(x, y)
-    return board
+    return BOARDSIZE[diffpick]
 
 
-def select_start_position(board: Board, character: Character) -> None:
+def select_start_position(board: Board, character: Character) -> Tile:
     """Ask the user in what corner of the board they wish to start and return the corresponding tile object.
 
     Args:
@@ -143,7 +157,7 @@ def select_start_position(board: Board, character: Character) -> None:
     Returns:
         tile: The tile to place the player on
     """
-    print('[Control Flow] [Setup Board] select_start_position')
+    # print('[Control Flow] [Setup Board] select_start_position')
     # find corners -> get user choice -> convert to coordinates -> get tile -> place character on tile
 
     north = board.sizey - 1
@@ -151,13 +165,14 @@ def select_start_position(board: Board, character: Character) -> None:
     east = board.sizex - 1
     west = 0
 
+    above = '\nChoose in wich corner of the baord to start your adventure.'
     choices = [
             ('1', 'Top left (North West)'),
             ('2', 'Top Right (North East)'),
             ('3', 'Bottom Left (South West)'),
             ('4', 'Bottom Right (South East)')
         ]
-    choice = user_choice(choices)
+    choice = user_choice(choices, above=above)
     if choice == "1":
         coordinates = (north, west)
     elif choice == "2":
@@ -168,7 +183,7 @@ def select_start_position(board: Board, character: Character) -> None:
         coordinates = (south, east)
 
     tile = board.get_tile(coordinates)
-    tile.place_character(character)
+    return tile
 
 
 # ###################################################################
@@ -190,22 +205,34 @@ def select_start_position(board: Board, character: Character) -> None:
 
 
 if __name__ == "__main__":
+    while True:
+        choices = [
+            ('1', 'New Character'),
+            ('2', 'Load Character'),
+            ('3', 'Exit Game'),
+        ]
+        choice = user_choice(choices, above=TITLE, exception='3')
 
-    choices = [
-        ('1', 'New Character'),
-        ('2', 'Load Character'),
-        ('3', 'Exit Game'),
-    ]
-    choice = user_choice(choices, above=TITLE, exception='3')
+        if choice == '3':
+            # print('[Control Flow] [Main Menu] exit')
+            break
+        if choice == '1':
+            is_new = True
+        elif choice == '2':
+            is_new = False
 
-    if choice == '1':
-        character = create_character()
-    elif choice == '2':
-        character = load_character()
+        # setup character
+        character = setup_character(is_new)
+        if character is None:
+            continue
 
-    if choice == '3':
-        print('(testing) [Control Flow] Main Menu -> exit')
-        exit()
-    else:
-        board = setup_board(character)
-        # setup the game and run it
+        # setup board
+        board, start_tile = setup_board(character)
+
+        # run game
+        is_win = game_loop(board, start_tile)
+        if is_win:
+            # save character
+            save_character(board.get_character())
+
+    print('Thanks for playing :)')
