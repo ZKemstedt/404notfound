@@ -16,6 +16,8 @@
 #
 # [ App End ]
 from app.board import Board, BOARDSIZE
+from app.character import Character
+from app.helpers import user_choice
 
 TITLE = """
         __________                                                                            __
@@ -100,10 +102,16 @@ def choose_character_type():
 # Setup Board
 #
 # ###################################################################
+def setup_board(character: Character):
+    """Game Flow - Setup Board"""
+    print('[Control Flow] [Main Menu] setup_board')
+    board = select_board_size()
+    select_start_position(board, character)
+    return board
 
 
-def choose_board_size():
-    print('(testing) [Control Flow] Setup Board -> choose_start_position')
+def select_board_size():
+    print('[Control Flow] [Setup Board] select_board_size')
     ask_again = True
     while ask_again:
 
@@ -125,7 +133,7 @@ def choose_board_size():
     return board
 
 
-def choose_start_position(board: Board):
+def select_start_position(board: Board, character: Character):
     """Ask the user in what corner of the board they wish to start and return the corresponding tile object.
 
     Args:
@@ -134,31 +142,31 @@ def choose_start_position(board: Board):
     Returns:
         tile: The tile to place the player on
     """
-    print('(testing) [Control Flow] Setup Board -> choose_start_position')
-    choice = input(
-        "Choose from where you want to start game:"
-        "\n 1.Top left \n 2.Top right \n 3.Bottom left \n 4.Bottom right")
+    print('[Control Flow] [Setup Board] select_start_position')
+    # find corners -> get user choice -> convert to coordinates -> get tile -> place character on tile
+
     north = board.sizey - 1
     south = 0
     east = board.sizex - 1
     west = 0
 
+    choices = [
+            ('1', 'Top left (North West)'),
+            ('2', 'Top Right (North East)'),
+            ('3', 'Bottom Left (South West)'),
+            ('4', 'Bottom Right (South East)')
+        ]
+    choice = user_choice(choices)
     if choice == "1":
         coordinates = (north, west)
-
     elif choice == "2":
         coordinates = (north, east)
-
     elif choice == "3":
         coordinates = (south, west)
-
     elif choice == "4":
         coordinates = (south, east)
-
-    else:  # TODO this menu is not wrapped in a loop
-        pass
-
     tile = board.get_tile(coordinates)
+    tile.place_character(character)
     return tile
 
 
@@ -182,8 +190,6 @@ def choose_start_position(board: Board):
 
 if __name__ == "__main__":
 
-    # This is an alternative Main Menu Example
-    from app.helpers import user_choice
     choices = [
         ('1', 'New Character'),
         ('2', 'Load Character'),
@@ -198,5 +204,5 @@ if __name__ == "__main__":
         print('(testing) [Control Flow] Main Menu -> exit')
         exit()
     else:
-        print('(testing) [Control Flow] Main Menu -> \"Setup Board\"')
+        board = setup_board(character)
         # setup the game and run it
