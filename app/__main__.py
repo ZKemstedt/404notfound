@@ -7,8 +7,7 @@
 #   Load Character
 #       Setup Game Loop
 #       -> Setup Character
-#       -> Setup Board
-#       -> Place Character
+#       -> Setup Board + Place Character
 #       Run Game Loop
 #       -> [ stuff ]
 #       Game Loop End
@@ -16,14 +15,9 @@
 #   Exit Game
 #
 # [ App End ]
-
 from typing import Tuple, List, Optional
 
-BOARDSIZE = {
-    '1': (4, 4),
-    '2': (5, 5),
-    '3': (8, 8)
-}
+from app.board import Board, BOARDSIZE
 
 TITLE = """
         __________                                                                            __
@@ -119,6 +113,12 @@ def main_menu():
             print('\n\n\t\t\tYou can only enter an integer!\n\n')
 
 
+# ###################################################################
+#
+# Setup Character
+#
+# ###################################################################
+
 # Placeholder
 def load_character():
     print('(example) [Control Flow] Main Menu -> load_character')
@@ -154,26 +154,11 @@ def choose_character_type():
             print(error)
 
 
-def choose_start_position():
-    choose_position = input("Choose from where you want to start game:\n 1.Top left \n 2.Top right \n 3.Bottom left \n 4.Bottom right")
-
-    if choose_position == "1":
-        start_pos = (0, 0)
-
-    elif choose_position == "2":
-        start_pos = (0, (sizey -1))
-
-    elif choose_position == "3":
-        start_pos = ((sizex -1), 0)
-
-    elif choose_position == "4":
-        start_pos = ((sizex -1), (sizey -1))
-
-    # TODO
-    else:
-        pass
-
-    return start_pos
+# ###################################################################
+#
+# Setup Board
+#
+# ###################################################################
 
 
 def choose_board_size():
@@ -196,6 +181,60 @@ def choose_board_size():
     x, y = BOARDSIZE[diffpick]
     board = Board(x, y)
     return board
+
+
+def choose_start_position(board: Board):
+    """Ask the user in what corner of the board they wish to start and return the corresponding tile object.
+
+    Args:
+        board: the board object
+
+    Returns:
+        tile: The tile to place the player on
+    """
+    choice = input(
+        "Choose from where you want to start game:"
+        "\n 1.Top left \n 2.Top right \n 3.Bottom left \n 4.Bottom right")
+    north = board.sizey - 1
+    south = 0
+    east = board.sizex - 1
+    west = 0
+
+    if choice == "1":
+        coordinates = (north, west)
+
+    elif choice == "2":
+        coordinates = (north, east)
+
+    elif choice == "3":
+        coordinates = (south, west)
+
+    elif choice == "4":
+        coordinates = (south, east)
+
+    else:  # TODO this menu is not wrapped in a loop
+        pass
+
+    tile = board.get_tile(coordinates)
+    return tile
+
+
+# ###################################################################
+#
+# Run Game Loop
+#
+# ###################################################################
+
+# TODO
+
+
+# ###################################################################
+#
+# Game End / Save Character
+#
+# ###################################################################
+
+# TODO
 
 
 if __name__ == "__main__":
