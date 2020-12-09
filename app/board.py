@@ -13,7 +13,7 @@ class Tile:
         self.y = y
         self.explored = False
         self.player = None
-        self.monster = None
+        self.monsters = []
         self.treasure = None
 
     def __str__(self) -> str:
