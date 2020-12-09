@@ -15,7 +15,6 @@ from typing import List, Union
 from app.board import Board, Tile
 from app.monster import Monster
 from app.character import Character
-from app.__main__ import main_menu
 
 import time
 
