@@ -34,7 +34,7 @@ def user_choice(
     """
     choices = []
     text = above
-    text += '\n'
+    text += separator
     for key, description in menu_items:
         text += f'[ {key} ]  {description}'
         text += separator
