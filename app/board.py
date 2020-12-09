@@ -31,6 +31,9 @@ class Board:
 
         return (display_string)
 
+    def get_tile() -> Tile:
+        pass
+
 
 if __name__ == "__main__":
     board = Board(4, 4)
