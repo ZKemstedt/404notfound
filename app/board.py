@@ -57,12 +57,14 @@ class Board:
 
         return (display_string)
 
-    # TODO
-    def get_tile(coordinates: Tuple[int, int]) -> Tile:
+    def get_tile(self, coordinates: Tuple[int, int]) -> Tile:
         x, y = coordinates
+        tile = self.tiles[x][y]
         print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
+        return tile
 
 
 if __name__ == "__main__":
     board = Board(4, 4)
     print(board)
+    tile = board.get_tile((3, 0))
