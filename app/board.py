@@ -18,11 +18,14 @@ class Tile:
 
     def __str__(self) -> str:
         if self.player:
-            pass  # TODO
+            return 'P'
         elif self.explored:
             pass  # TODO
         else:
             return 'X'
+
+    def place_character(self, player):
+        self.player = player
 
     # Not yet sure if this will be a method to Board or Tile.
     def generate_monsters(self) -> None:  # TODO
@@ -67,4 +70,13 @@ class Board:
 if __name__ == "__main__":
     board = Board(4, 4)
     print(board)
-    tile = board.get_tile((3, 0))
+
+    example_player = ':)'
+
+    tile = board.get_tile((0, 3))
+    tile.place_character(example_player)
+    print(board)
+
+    target = board.get_tile((1, 3))
+    target.place_character(example_player)
+    print(board)
