@@ -16,7 +16,7 @@ class Character(object):
     def export(self) -> dict:
         character_class = self.__class__.__name__
         character_data = {}
-        character_data[self.name] = {'class': character_class, 'health': self.health}
+        character_data[self.name] = {'class': character_class, 'health': self.health, 'treasure': self.treasure}
         return character_data
 
 
