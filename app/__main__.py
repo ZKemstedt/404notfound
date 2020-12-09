@@ -212,7 +212,8 @@ if __name__ == "__main__":
             ('2', 'Load Character'),
             ('3', 'Exit Game'),
         ]
-        choice = user_choice(choices, above=TITLE, exception='3')
+        sep = "\n                                        "
+        choice = user_choice(choices, above=TITLE, exception='3', separator=sep)
 
         if choice == '3':
             # print('[Control Flow] [Main Menu] exit')
