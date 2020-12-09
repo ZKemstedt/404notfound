@@ -65,11 +65,13 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
 
 
 def flee_battle(player: Character) -> bool:
-    flee_chance = Character.evasion * 10
+    flee_chance = player.evasion * 10
     random_roll = random.randint(0, 100)
-    print(flee_chance)
-    print(random_roll)
+    if player.__class__.__name__ == "Wizard":
+        flee_chance = 80
     if flee_chance > random_roll:
+        print(flee_chance)
+        print(player.__class__.__name__)
         return True
     return False
 
@@ -103,4 +105,3 @@ def pause_menu():
         pass
     else:
         pass
-
