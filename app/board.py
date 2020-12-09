@@ -1,3 +1,5 @@
+from typing import Tuple
+
 BOARDSIZE = {
     '1': (4, 4),
     '2': (5, 5),
@@ -6,16 +8,36 @@ BOARDSIZE = {
 
 
 class Tile:
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
+        self.explored = False
+        self.player = None
+        self.monsters = []
+        self.treasure = None
 
-    def __str__(self):
-        return 'X'
+    def __str__(self) -> str:
+        if self.player:
+            return 'P'
+        elif self.explored:
+            pass  # TODO
+        else:
+            return 'X'
+
+    def place_character(self, player):
+        self.player = player
+
+    # Not yet sure if this will be a method to Board or Tile.
+    def generate_monsters(self) -> None:  # TODO
+        pass
+
+    # Not yet sure if this will be a method to Board or Tile.
+    def generate_treasures(self) -> None:  # TODO
+        pass
 
 
 class Board:
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.sizex = x
         self.sizey = y
         self.tiles = []
@@ -25,46 +47,36 @@ class Board:
             for row in range(y):
                 tile = Tile(col, row)
                 rows.append(tile)
-                self.tiles.append(rows)
-            # print(rows)
+            self.tiles.append(rows)
 
-
-def choose_board_size():
-    ask_again = True
-    while ask_again:
-
-        diffpick = input('Choose boardsize!\n[1] Small\n[2] Medium\n[3] Large\n')
-        ask_again = False
-
-        if diffpick == '1':
-            print("You created a 4x4 board!\n")
-        elif diffpick == '2':
-            print("You created a 5x5 board!\n")
-        elif diffpick == '3':
-            print("You created a 8x8 board!\n")
-        else:
-            ask_again = True
-            print("Invalid selection")
-
-    x, y = BOARDSIZE[diffpick]
-    board = Board(x, y)
-    return board
-
-
-def display_board(board):
-
-    display_string = ''
-    for column in range(board.sizey, 0, -1):
-        for row in range(0, board.sizex):
-            tile = board.tiles[row][column-1]
-            tile_string = str(tile)
-            display_string += f'{tile_string}   '
-
-        if(row != board.sizex and (column != 1)):
+    def __str__(self) -> str:
+        display_string = ''
+        for column in range(self.sizey, 0, -1):
+            for row in range(0, self.sizex):
+                tile = self.tiles[row][column-1]
+                tile_string = str(tile)
+                display_string += f'{tile_string}   '
             display_string += '\n'
 
-    return (display_string)
+        return (display_string)
+
+    def get_tile(self, coordinates: Tuple[int, int]) -> Tile:
+        x, y = coordinates
+        tile = self.tiles[x][y]
+        print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
+        return tile
 
 
 if __name__ == "__main__":
-    print(display_board(Board(4, 4)))
+    board = Board(4, 4)
+    print(board)
+
+    example_player = ':)'
+
+    tile = board.get_tile((0, 3))
+    tile.place_character(example_player)
+    print(board)
+
+    target = board.get_tile((1, 3))
+    target.place_character(example_player)
+    print(board)

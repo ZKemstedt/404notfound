@@ -1,53 +1,94 @@
 # Game loop
 #
-#   Setup
-#       -> Character
-#       -> Board
-#       -> Place Character
 #
 #   Run (Loop)
 #       -> Display Board
 #       -> Move Character
 #       -> Pause Game
 #
+#   Battle code goes in here too
 #
 #   Exit
 #
+from typing import List, Union
+
+from app.board import Board, Tile
+from app.monster import Monster
+from app.character import Character
 
 
-def enter_character_name():
-    name = input('Enter the character name: ')
-    return name
+def game_loop(board: Board, tile: Tile) -> bool:
+    """Game Flow - Game Loop
+
+    Args:
+        board (Board): The board the game is played on
+        tile (Tile): The players starting tile
+
+    Returns:
+        bool: True if user cleared the board, False if the user died
+    """
+    game_run = True
+    while game_run:
+        target = player_move_menu()  # target: Tile or None
+
+        if target is None:  # Sudden Game Exit
+            return False  # Do not save
+
+        if target.monsters:
+            isalive = battle(player=tile.player, monsters=target.monsters)
+            if not isalive:
+                return False
+
+        if target.treasure:
+            pass  # player pickup treasure
+
+        if target.exit:
+            # exit yes or no?
+            # and then return True
+            return True
+
+        move_player(tile, target)
 
 
-def choose_start_position():
-    choose_position = input("Choose from where you want to start game:\n 1.Top left \n 2.Top right \n 3.Bottom left \n 4.Bottom right")
+def battle(player: Character, monsters: List[Monster]) -> bool:
+    """Game Flow - Battle Loop
 
-    if choose_position == "1":
-        start_pos = (0, 0)
+    Args:
+        player (Character): [description]
+        monsters (list: [description]
 
-    elif choose_position == "2":
-        start_pos = (0, (sizey -1))
-
-    elif choose_position == "3":
-        start_pos = ((sizex -1), 0)
-
-    elif choose_position == "4":
-        start_pos = ((sizex -1), (sizey -1))
-
-    # TODO
-    else:
-        pass
-
-    return start_pos
+    Returns:
+        bool: is the user still alive?
+    """
+    pass
 
 
+def player_move_menu() -> Union[Tile, None]:
+    """[summary]
+
+    Returns:
+        Tile: The tile the player is trying to move towards
+        None: The player decided to stop playing
+    """
+    pass
+
+
+def move_player(old: Tile, new: Tile) -> None:
+    """Move the player object from Tile `old` to Tile `new`
+
+    Args:
+        old (Tile): [description]
+        new (Tile): [description]
+    """
+    pass
+
+
+# To be merged into Game Loop Menu / Player Move Loop
 def pause_menu():
     choice = input('Do you want to 1: Exit the game or 2: Continue?')
     if (choice == 1):
-        break
+        pass
     elif (choice == 2):
-        continue
+        pass
     else:
-        print('Try again')
         pass

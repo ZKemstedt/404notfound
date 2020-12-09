@@ -1,24 +1,6 @@
 import random
 
 
-def choose_character_type():
-    correct_answer = [1, 2, 3]
-    error = ('You can only enter 1, 2 or 3')
-    while True:
-        try:
-            choice = int(input(
-                'Choose character type.\n'
-                '(1) Knight, (2) Wizard or (3) Thief.\n'
-                ))
-        except ValueError:
-            print(error)
-
-        if choice in correct_answer:
-            return choice
-        else:
-            print(error)
-
-
 class Character(object):
     def __init__(self, name, initiative, health, power, evasion):
         self.name = name
@@ -30,11 +12,11 @@ class Character(object):
     def special_power(self):
         raise NotImplementedError("Must be implemented!")
 
-    def export_character_info(self) -> dict:
-        user_class = self.__class__.__name__
-        character_info = {}
-        character_info[self.name] = {'class': user_class, 'health': self.health}
-        return character_info
+    def export(self) -> dict:
+        character_class = self.__class__.__name__
+        character_data = {}
+        character_data[self.name] = {'class': character_class, 'health': self.health}
+        return character_data
 
 
 class Knight(Character):

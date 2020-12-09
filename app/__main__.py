@@ -1,93 +1,29 @@
-
-# Launcher
-#
 # Menus and interactions before the game starts and after the game ends
 #
-# Main Menu
-# Load character
-# Save character
+# [ App start ]
 #
+# Main Menu
+#   New Character
+#   Load Character
+#       Setup Game Loop
+#       -> Setup Character
+#       -> Setup Board + Place Character
+#       Run Game Loop
+#       -> [ stuff ]
+#       Game Loop End
+#   Save Character
+#   Exit Game
+#
+# [ App End ]
+from typing import Tuple, Union
 
-# Dungeon Run
-from typing import Tuple, List, Optional
+from app.board import Board, BOARDSIZE, Tile
+from app.character import Character, Wizard, Thief, Knight
+from app.helpers import user_choice
+from app.save_load_data import load_character, save_character
+from app.game import game_loop
 
 TITLE = """
-        __________                                                                            __
-    |    __     \\   ___    ___  ____      __    ________   ________  ___    ___  ____     |  |
-    |   |   \\    \\ |   |  |   ||     \\   |  |  /   _____\\ |   _____||   |  |   ||     \\   |  |
-    |   |    |    ||   |  |   ||  |\\  \\  |  | /  /   ___  |  |____  |   |  |   ||  |\\  \\  |  |
-    |   |   /    / |   |  |   ||  | \\  \\ |  ||   |  |_  | |   ____| |   |  |   ||  | \\  \\ |  |
-    |    --     /  |   |__|   ||  |  \\  \\|  | \\   \\__/  / |  |_____ |   |__|   ||  |  \\  \\|  |
-        ----------     \\________/ |__|   \\_____|   \\______/  |________| \\________/ |__|   \\_____|
-                                ______    ___    ___  ____      __
-                            |   __  \\ |   |  |   ||     \\   |  |
-                            |  |  |  ||   |  |   ||  |\\  \\  |  |
-                            |   --  / |   |  |   ||  | \\  \\ |  |
-                            |  |\\   \\ |   |__|   ||  |  \\  \\|  |
-                            |__| \\___\\ \\________/ |  |   \\_____|
-                                                    |__|
-"""
-
-
-def user_choice(
-    menu_items: List[Tuple[str, str]],
-    *,
-    above: Optional[str] = '\n',
-    below: Optional[str] = '\n',
-    separator: Optional[str] = '\n',
-    prompt: Optional[str] = '> ',
-    invalid: Optional[str] = None,
-    exception: Optional[str] = None,
-    error_string: Optional[str] = 'Invalid choice'
-) -> str:
-    """Prompts the user to choose an option from a menu and return the corresponding key.
-
-    Args:
-        menu_items (list): a list of tuples representing the menu items: (key, description)
-                    where key is the expected value the user will enter as well as the value to return.
-                    And description is the description of said choice
-
-        above (str): optional, string to print above the list of menu options. Defaults to a linebreak
-        below (str): optional, string to print below the list of menu options. Defaults to a linebreak
-        separator (str): optional, string used to separate the menu options. Defaults to a linebreak
-        prompt (str): optional, the string used when prompting the user for input. Defaults to `> `
-        invalid (str): optionl, if set; return said value when the user enters an invalid choice.
-        exception (str): optional, if set; return said value when the user raises `KeyboardInterrupt`.
-        error_string (str): optional, string to print when the user enters an invalid choice.
-
-    Returns:
-        choice (str): one of the specified correct choices
-        invalid (str): if provided as argument and user enters an invalid choice
-        exception (str): if provided as argument and users raises `KeyboardInterrupt`
-    """
-    choices = []
-    text = above
-    for key, description in menu_items:
-        text += f'[ {key} ]  {description}'
-        text += separator
-        choices.append(key)
-    text += below
-
-    print(text)
-    while True:
-        try:
-            choice = input(prompt)
-            if choice in choices:
-                return choice
-            elif invalid:
-                return invalid
-            elif error_string:
-                print(error_string)
-
-        except KeyboardInterrupt:
-            if exception:
-                return exception
-            elif error_string:
-                print(error_string)
-
-
-def main_menu():
-    print("""
          __________                                                                            __
         |    __     \\   ___    ___  ____      __    ________   ________    _______   ____     |  |
         |   |   \\    \\ |   |  |   ||     \\   |  |  /   _____\\ |   _____| /   __    \\|     \\   |  |
@@ -102,7 +38,12 @@ def main_menu():
                                 |  |\\   \\ |   |__|   ||  |  \\  \\|  |
                                 |__| \\___\\ \\________/ |  |   \\_____|
                                                       |__|
-            """)
+"""
+
+
+def main_menu():
+
+    print(TITLE)
     menu_loop = True
     while menu_loop:
         try:
@@ -120,32 +61,179 @@ def main_menu():
             print('\n\n\t\t\tYou can only enter an integer!\n\n')
 
 
-def load_character():
-    print('(example) [Control Flow] Main Menu -> load_character')
-    return 'example'
+# ###################################################################
+#
+# Setup Character
+#
+# ###################################################################
+
+def setup_character(is_new: bool) -> Union[Character, None]:
+    print('[Control Flow] [Setup Character] setup_character')
+    name = enter_character_name()
+    if is_new:
+        choice = choose_character_type()
+        character = create_character(choice, name)
+    else:
+        character = load_character(name)
+    return character
 
 
-def create_character():
-    print('(example) [Control Flow] Main Menu -> create_character')
-    return 'example'
+def create_character(choice: int, name: str) -> Character:
+    # print('[Control Flow] [Setup Character] create_character')
+    choice_to_class = {
+        1: Knight,
+        2: Wizard,
+        3: Thief
+    }
+    return choice_to_class[choice](name)
+
+
+def enter_character_name():
+    name = input('Enter the character name: ')
+    return name
+
+
+def choose_character_type():
+    correct_answer = [1, 2, 3]
+    error = ('You can only enter 1, 2 or 3')
+    while True:
+        try:
+            choice = int(input(
+                'Choose character type.\n'
+                '(1) Knight, (2) Wizard or (3) Thief.\n'
+                ))
+        except ValueError:
+            print(error)
+
+        if choice in correct_answer:
+            return choice
+        else:
+            print(error)
+
+
+# ###################################################################
+#
+# Setup Board
+#
+# ###################################################################
+def setup_board(character: Character) -> Tuple[Board, Tile]:
+    """Game Flow - Setup Board"""
+    print('[Control Flow] [Main Menu] setup_board')
+    # board
+    boardsize = select_board_size()
+    board = Board(*boardsize)
+    # place player
+    start_tile = select_start_position(board, character)
+    start_tile.place_character(character)
+    return board, start_tile
+
+
+def select_board_size():
+    # print('[Control Flow] [Setup Board] select_board_size')
+    ask_again = True
+    while ask_again:
+
+        diffpick = input('Choose boardsize!\n[1] Small\n[2] Medium\n[3] Large\n')
+        ask_again = False
+
+        if diffpick == '1':
+            print("You created a 4x4 board!\n")
+        elif diffpick == '2':
+            print("You created a 5x5 board!\n")
+        elif diffpick == '3':
+            print("You created a 8x8 board!\n")
+        else:
+            ask_again = True
+            print("Invalid selection")
+
+    return BOARDSIZE[diffpick]
+
+
+def select_start_position(board: Board, character: Character) -> Tile:
+    """Ask the user in what corner of the board they wish to start and return the corresponding tile object.
+
+    Args:
+        board: the board object
+
+    Returns:
+        tile: The tile to place the player on
+    """
+    # print('[Control Flow] [Setup Board] select_start_position')
+    # find corners -> get user choice -> convert to coordinates -> get tile -> place character on tile
+
+    north = board.sizey - 1
+    south = 0
+    east = board.sizex - 1
+    west = 0
+
+    above = '\nChoose in wich corner of the baord to start your adventure.'
+    choices = [
+            ('1', 'Top left (North West)'),
+            ('2', 'Top Right (North East)'),
+            ('3', 'Bottom Left (South West)'),
+            ('4', 'Bottom Right (South East)')
+        ]
+    choice = user_choice(choices, above=above)
+    if choice == "1":
+        coordinates = (north, west)
+    elif choice == "2":
+        coordinates = (north, east)
+    elif choice == "3":
+        coordinates = (south, west)
+    elif choice == "4":
+        coordinates = (south, east)
+
+    tile = board.get_tile(coordinates)
+    return tile
+
+
+# ###################################################################
+#
+# Run Game Loop
+#
+# ###################################################################
+
+# TODO
+
+
+# ###################################################################
+#
+# Game End / Save Character
+#
+# ###################################################################
+
+# TODO
 
 
 if __name__ == "__main__":
+    while True:
+        choices = [
+            ('1', 'New Character'),
+            ('2', 'Load Character'),
+            ('3', 'Exit Game'),
+        ]
+        choice = user_choice(choices, above=TITLE, exception='3')
 
-    # This is a Main Menu Example
-    choices = [
-        ('1', 'New Character'),
-        ('2', 'Load Character'),
-        ('3', 'Exit Game'),
-    ]
-    choice = user_choice(choices, above=TITLE, exception='3')
-    if choice == '1':
-        character = create_character()
-    elif choice == '2':
-        character = load_character()
-    if choice == '3':
-        print('(example) [Control Flow] Main Menu -> exit')
-        exit()
-    else:
-        print('(example) [Control Flow] Main Menu -> \"Setup Board\"')
-        # setup the game and run it
+        if choice == '3':
+            # print('[Control Flow] [Main Menu] exit')
+            break
+        if choice == '1':
+            is_new = True
+        elif choice == '2':
+            is_new = False
+
+        # setup character
+        character = setup_character(is_new)
+        if character is None:
+            continue
+
+        # setup board
+        board, start_tile = setup_board(character)
+
+        # run game
+        is_win = game_loop(board, start_tile)
+        if is_win:
+            # save character
+            save_character(board.get_character())
+
+    print('Thanks for playing :)')
