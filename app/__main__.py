@@ -251,8 +251,8 @@ if __name__ == "__main__":
     elif choice == '2':
         character = load_character()
     if choice == '3':
-        print('(example) [Control Flow] Main Menu -> exit')
+        print('(testing) [Control Flow] Main Menu -> exit')
         exit()
     else:
-        print('(example) [Control Flow] Main Menu -> \"Setup Board\"')
+        print('(testing) [Control Flow] Main Menu -> \"Setup Board\"')
         # setup the game and run it

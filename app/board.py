@@ -1,3 +1,5 @@
+from typing import Tuple
+
 BOARDSIZE = {
     '1': (4, 4),
     '2': (5, 5),
@@ -55,8 +57,10 @@ class Board:
 
         return (display_string)
 
-    def get_tile() -> Tile:
-        pass
+    # TODO
+    def get_tile(coordinates: Tuple[int, int]) -> Tile:
+        x, y = coordinates
+        print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
 
 
 if __name__ == "__main__":
