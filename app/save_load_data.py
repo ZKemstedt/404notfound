@@ -57,9 +57,9 @@ def load_character(name: str) -> Union[Character, None]:
         if _class == 'Knight':
             character = Knight(_name)
         elif _class == 'Wizard':
-            character = Wizard(name)
+            character = Wizard(_name)
         elif _class == 'Thief':
-            character = Thief(name)
+            character = Thief(_name)
         return character
     return None
 
