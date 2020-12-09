@@ -2,9 +2,26 @@ class Tile:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.explored = False
+        self.player = None
+        self.monster = None
+        self.treasure = None
 
     def __str__(self):
-        return 'X'
+        if self.player:
+            pass  # TODO
+        elif self.explored:
+            pass  # TODO
+        else:
+            return 'X'
+
+    # Not yet sure if this will be a method to Board or Tile.
+    def generate_monsters(self):  # TODO
+        pass
+
+    # Not yet sure if this will be a method to Board or Tile.
+    def generate_treasures(self):  # TODO
+        pass
 
 
 class Board:
