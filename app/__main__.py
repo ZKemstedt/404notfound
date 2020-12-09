@@ -183,6 +183,7 @@ def choose_start_position(board: Board):
 if __name__ == "__main__":
 
     # This is an alternative Main Menu Example
+    from app.helpers import user_choice
     choices = [
         ('1', 'New Character'),
         ('2', 'Load Character'),
