@@ -1,3 +1,10 @@
+BOARDSIZE = {
+    '1': (4, 4),
+    '2': (5, 5),
+    '3': (8, 8)
+}
+
+
 class Tile:
     def __init__(self, x: int, y: int):
         self.x = x
