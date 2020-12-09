@@ -1,5 +1,5 @@
 class Tile:
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
         self.explored = False
@@ -7,7 +7,7 @@ class Tile:
         self.monster = None
         self.treasure = None
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.player:
             pass  # TODO
         elif self.explored:
@@ -16,16 +16,16 @@ class Tile:
             return 'X'
 
     # Not yet sure if this will be a method to Board or Tile.
-    def generate_monsters(self):  # TODO
+    def generate_monsters(self) -> None:  # TODO
         pass
 
     # Not yet sure if this will be a method to Board or Tile.
-    def generate_treasures(self):  # TODO
+    def generate_treasures(self) -> None:  # TODO
         pass
 
 
 class Board:
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.sizex = x
         self.sizey = y
         self.tiles = []
