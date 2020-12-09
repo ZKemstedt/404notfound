@@ -133,7 +133,7 @@ def select_board_size():
     return board
 
 
-def select_start_position(board: Board, character: Character):
+def select_start_position(board: Board, character: Character) -> None:
     """Ask the user in what corner of the board they wish to start and return the corresponding tile object.
 
     Args:
@@ -165,9 +165,9 @@ def select_start_position(board: Board, character: Character):
         coordinates = (south, west)
     elif choice == "4":
         coordinates = (south, east)
+
     tile = board.get_tile(coordinates)
     tile.place_character(character)
-    return tile
 
 
 # ###################################################################
@@ -196,10 +196,12 @@ if __name__ == "__main__":
         ('3', 'Exit Game'),
     ]
     choice = user_choice(choices, above=TITLE, exception='3')
+
     if choice == '1':
         character = create_character()
     elif choice == '2':
         character = load_character()
+
     if choice == '3':
         print('(testing) [Control Flow] Main Menu -> exit')
         exit()
