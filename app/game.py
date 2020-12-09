@@ -11,6 +11,7 @@
 #   Exit
 #
 from typing import List, Union
+import random
 
 from app.board import Board, Tile
 from app.monster import Monster
@@ -63,6 +64,16 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     pass
 
 
+def flee_battle(player: Character) -> bool:
+    flee_chance = Character.evasion * 10
+    random_roll = random.randint(0, 100)
+    print(flee_chance)
+    print(random_roll)
+    if flee_chance > random_roll:
+        return True
+    return False
+
+
 def player_move_menu() -> Union[Tile, None]:
     """[summary]
 
@@ -92,3 +103,4 @@ def pause_menu():
         pass
     else:
         pass
+
