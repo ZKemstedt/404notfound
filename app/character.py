@@ -2,12 +2,13 @@ import random
 
 
 class Character(object):
-    def __init__(self, name, initiative, health, power, evasion):
+    def __init__(self, name, initiative, health, power, evasion, treasure):
         self.name = name
         self.initiative = initiative
         self.health = health
         self.power = power
         self.evasion = evasion
+        self.treasure = treasure
 
     def special_power(self):
         raise NotImplementedError("Must be implemented!")
@@ -21,7 +22,7 @@ class Character(object):
 
 class Knight(Character):
     def __init__(self, name):
-        super().__init__(name, 5, 9, 6, 4)
+        super().__init__(name, 5, 9, 6, 4, 0)
 
     def special_power(self):
         print("As a Knight you skip first attack from monster")
@@ -29,7 +30,7 @@ class Knight(Character):
 
 class Wizard(Character):
     def __init__(self, name):
-        super().__init__(name, 6, 4, 9, 5)
+        super().__init__(name, 6, 4, 9, 5, 0)
 
     def special_power(self):
         escape_chance = random.randit(1, 100)
@@ -42,7 +43,7 @@ class Wizard(Character):
 
 class Thief(Character):
     def __init__(self, name):
-        super().__init__(name, 7, 5, 5, 7)
+        super().__init__(name, 7, 5, 5, 7, 0)
 
     def special_power(self):
         critical_hit = random.randit(1, 100)
