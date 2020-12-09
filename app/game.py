@@ -6,6 +6,7 @@
 #       -> Move Character
 #       -> Pause Game
 #
+#   Battle code goes in here too
 #
 #   Exit
 #
