@@ -70,9 +70,9 @@ def flee_battle(player: Character) -> bool:
     if player.__class__.__name__ == "Wizard":
         flee_chance = 80
     if flee_chance > random_roll:
-        print(flee_chance)
-        print(player.__class__.__name__)
+        print('You managed to escape!\n')
         return True
+    print('You failed to escape.\n')
     return False
 
 
