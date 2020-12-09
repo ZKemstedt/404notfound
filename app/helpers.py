@@ -5,7 +5,7 @@ def user_choice(
     menu_items: List[Tuple[str, str]],
     *,
     above: Optional[str] = '\n',
-    below: Optional[str] = '\n',
+    below: Optional[str] = '',
     separator: Optional[str] = '\n',
     prompt: Optional[str] = '> ',
     invalid: Optional[str] = None,
@@ -34,6 +34,7 @@ def user_choice(
     """
     choices = []
     text = above
+    text += '\n'
     for key, description in menu_items:
         text += f'[ {key} ]  {description}'
         text += separator
