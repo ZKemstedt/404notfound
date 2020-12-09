@@ -82,6 +82,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     Returns:
         bool: is the user still alive?
     """
+    # if dead --> game_over()
     pass
 
 
@@ -114,4 +115,3 @@ def pause_menu():
         pass
     else:
         pass
-
