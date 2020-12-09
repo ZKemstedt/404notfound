@@ -8,25 +8,25 @@ class Monster(object):
         self.appearance_rate = appearance_rate
 
 
-class GiantSpider(monster):
+class GiantSpider(Monster):
 
     def __init__(self):
         super().__init__(1, 3, 2, 7, 0.2)
 
 
-class Skeleton(monster):
+class Skeleton(Monster):
 
     def __init__(self):
         super().__init__(2, 3, 3, 4, 0.15)
 
 
-class Orc(monster):
+class Orc(Monster):
 
     def __init__(self):
         super().__init__(3, 4, 4, 6, 0.1)
 
 
-class Troll(monster):
+class Troll(Monster):
 
     def __init__(self):
         super().__init__(4, 2, 7, 2, 0.05)
