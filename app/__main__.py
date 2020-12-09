@@ -18,6 +18,7 @@
 from app.board import Board, BOARDSIZE
 from app.character import Character
 from app.helpers import user_choice
+from app.save_load_data import load_character, save_character
 
 TITLE = """
         __________                                                                            __

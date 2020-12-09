@@ -64,7 +64,7 @@ def load_character(name: str) -> Union[Character, None]:
     return None
 
 
-def save_data(character: Character) -> None:
+def save_character(character: Character) -> None:
     """Saves a `Character` object
 
     Args:
