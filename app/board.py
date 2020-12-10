@@ -1,4 +1,5 @@
 from typing import Tuple
+from app.helpers import user_choice
 import random
 
 BOARDSIZE = {
@@ -38,9 +39,18 @@ class Tile:
         pass
 
     def exit_tile(self) -> bool:
+        choices = [
+            ('y', 'Leave and save'),
+            ('n', 'Stay and explore'),
+        ]
         if self.exit:
-            return True
-        return False
+            print('You found the exit!\n')
+            print('Do you want to leave?\n')
+            choice = user_choice(choices)
+            if choice == 'y':
+                return True
+            elif choice == 'n':
+                return False
 
 
 class Board:
