@@ -80,7 +80,6 @@ class Board:
     def generate_exit_tile(self) -> None:
         for row in random.sample(self.tiles, 1):
             for tile in random.sample(row, 1):
-                # print(rnd_tile_number)
                 exit_tile = tile
                 exit_tile.exit = True
 
