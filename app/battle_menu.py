@@ -1,8 +1,12 @@
-from app import character
-from app import monster
-from app import board
 import random
-from app.helpers import user_choice
+# from app import character
+# from app import monster
+# from app import board
+# from app.helpers import user_choice
+import character
+import monster
+import board
+from helpers import user_choice
 
 
 def print_battle_menu(player, monsters):  # need to add monsters
@@ -32,11 +36,6 @@ def print_battle_menu(player, monsters):  # need to add monsters
 #     return menu_choice
 
 
-elsa = character.Character('Elsa', 15, 1, 4, 15)
-abbe = character.Character('micke', 11, 2, 7, 9)
-monster = monster.Monster(2, 3, 3, 4, 0.15)
-
-
 def dice(x) -> int:
     dice_sum = 0
     for _ in range(1,x+1):
@@ -46,26 +45,29 @@ def dice(x) -> int:
     return dice_sum
 
 
-tile = board.Tile(0,0)
-x = tile.monsters
-x.append('scarymonsta')
-x.append(1)
+# tile = board.Tile(0,0)
+# x = tile.monsters
+# x.append('scarymonsta')
+# x.append(1)
 
 
 def fight(player):
     cmd = print_btl_menu(elsa)
-    #Player has entered fight and chosen 1, (fight!)
+    # Player has entered fight and chosen 1, (fight!)
     if(cmd == '1'):
-        
+
         attack_value = dice(player.power)
-        #attack value is the dice_sum, dice thrown for each point of power
+        # attack value is the dice_sum, dice thrown for each point of power
 
 
 def fighting(attacker, defender):
     print('axax')
-    
-    
-    
 
 
-fight(elsa)
+# fight(elsa)
+
+if __name__ == "__main__":
+    elsa = character.Character('Elsa', 15, 1, 4, 15)
+    abbe = character.Character('Micke', 11, 2, 7, 9)
+    monster = monster.Monster(2, 3, 3, 4, 0.15)
+    print_battle_menu(elsa, [monster])
