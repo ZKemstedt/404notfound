@@ -174,13 +174,13 @@ def select_start_position(board: Board, character: Character) -> Tile:
         ]
     choice = user_choice(choices, above=above)
     if choice == "1":
-        coordinates = (north, west)
+        coordinates = (west, north)
     elif choice == "2":
-        coordinates = (north, east)
+        coordinates = (east, north)
     elif choice == "3":
-        coordinates = (south, west)
+        coordinates = (west, south)
     elif choice == "4":
-        coordinates = (south, east)
+        coordinates = (east, south)
 
     tile = board.get_tile(coordinates)
     return tile
