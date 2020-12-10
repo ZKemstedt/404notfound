@@ -67,7 +67,7 @@ class Board:
             tile = self.tiles[x][y]
         except IndexError:
             return None
-        print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
+        print(f'[Control Flow] [Board] get_tile(({x},{y}))')
         return tile
 
 
