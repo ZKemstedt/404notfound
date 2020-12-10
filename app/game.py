@@ -116,3 +116,18 @@ def pause_menu():
         pass
     else:
         pass
+
+
+def moveMenu():
+    while True:
+        choices = [('w', 'Go North'), ('a', 'Go West'), ('s', 'Go South'), ('d', 'Go East')]
+        choice = user_choice(choices)
+            if choice == 'w':
+                coordinates = (tile.x, tile.y + 1)
+            elif choice == 'a':
+                coordinates = (tile.x -1, tile.y)
+            elif choice == 's':
+                coordinates = (tile.x, tile.y - 1)
+            elif choice == 'd':
+                coordinates = (tile.x + 1, tile.y)
+    return coordinates
