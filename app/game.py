@@ -11,17 +11,37 @@
 #   Exit
 #
 import random
+import time
 from typing import List, Union, Tuple
-
 
 from app.board import Board, Tile
 from app.monster import Monster
 from app.character import Character
-from helpers import user_choice
-
-import time
+from app.helpers import user_choice
 
 
+GAME_OVER = """
+              _______       ____      ___   ___   _______
+             /  ,____\\     /    \\    |   \\_/   | |  ,____|
+            |  |  ____    /  /\\  \\   |         | |  |__
+            |  | |__  |  /  /__\\  \\  |  |`-´|  | |   __|
+            |  |___|  | /  ______  \\ |  |   |  | |  |____
+             \\_______/ /__/      \\__\\|  |   |__| |_______|
+              _____  ___      ___  _______   _______     __
+             /  _  \\ \\  \\    /  / |   ____| |   _   \\   |  |
+            /  | |  \\ \\  \\  /  /  |  |__    |  |_|   \\  |  |
+           |   | |   | \\  \\/  /   |   __|   |   _   /   |__|
+            \\   -   /   \\    /    |  |____  |  |  \\  \\   __
+             \\_____/     \\__/     |_______| |__|   \\__| |__|
+
+        """
+
+
+# ###################################################################
+#
+# Game Loop
+#
+# ###################################################################
 def game_loop(board: Board, tile: Tile) -> bool:
     """Game Flow - Game Loop
 
@@ -34,7 +54,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
     """
     game_run = True
     while game_run:
-        coordinates = player_move_menu()  # target: Tile or None
+        coordinates = player_move_menu(tile)  # target: Tile or None
         target = board.get_tile(coordinates)
 
         if target is None:  # Sudden Game Exit
@@ -57,25 +77,41 @@ def game_loop(board: Board, tile: Tile) -> bool:
         move_player(tile, target)
 
 
-def game_over():
-    print("""
-              _______       ____      ___   ___   _______
-             /  ,____\\     /    \\    |   \\_/   | |  ,____|
-            |  |  ____    /  /\\  \\   |         | |  |__
-            |  | |__  |  /  /__\\  \\  |  |`-´|  | |   __|
-            |  |___|  | /  ______  \\ |  |   |  | |  |____
-             \\_______/ /__/      \\__\\|  |   |__| |_______|
-              _____  ___      ___  _______   _______     __
-             /  _  \\ \\  \\    /  / |   ____| |   _   \\   |  |
-            /  | |  \\ \\  \\  /  /  |  |__    |  |_|   \\  |  |
-           |   | |   | \\  \\/  /   |   __|   |   _   /   |__|
-            \\   -   /   \\    /    |  |____  |  |  \\  \\   __
-             \\_____/     \\__/     |_______| |__|   \\__| |__|
+def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
+    """[summary]
 
-        """)
-    time.sleep(2)
+    Returns:
+        tuple: The coordinates the player is trying to move towards
+        None: The player decided to stop playing
+    """
+    choices = [('w', 'Go North'), ('a', 'Go West'), ('s', 'Go South'), ('d', 'Go East')]
+    choice = user_choice(choices)
+    if choice == 'w':
+        coordinates = (tile.x, tile.y + 1)
+    elif choice == 'a':
+        coordinates = (tile.x - 1, tile.y)
+    elif choice == 's':
+        coordinates = (tile.x, tile.y - 1)
+    elif choice == 'd':
+        coordinates = (tile.x + 1, tile.y)
+    return coordinates
 
 
+def move_player(old: Tile, new: Tile) -> None:
+    """Move the player object from Tile `old` to Tile `new`
+
+    Args:
+        old (Tile): [description]
+        new (Tile): [description]
+    """
+    pass
+
+
+# ###################################################################
+#
+# Battle Loop
+#
+# ###################################################################
 def battle(player: Character, monsters: List[Monster]) -> bool:
     """Game Flow - Battle Loop
 
@@ -86,7 +122,6 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     Returns:
         bool: is the user still alive?
     """
-    # if dead --> game_over()
     pass
 
 
@@ -121,47 +156,11 @@ def print_battle_menu(player, monsters):  # need to align hp values
     return choice
 
 
-def player_move_menu() -> Union[Tuple[int, int], None]:
-    """[summary]
-
-    Returns:
-        Tile: The tile the player is trying to move towards
-        None: The player decided to stop playing
-    """
-    pass
-
-
-def move_player(old: Tile, new: Tile) -> None:
-    """Move the player object from Tile `old` to Tile `new`
-
-    Args:
-        old (Tile): [description]
-        new (Tile): [description]
-    """
-    pass
-
-
-# To be merged into Game Loop Menu / Player Move Loop
-def pause_menu():
-    choice = input('Do you want to 1: Exit the game or 2: Continue?')
-    if (choice == 1):
-        pass
-    elif (choice == 2):
-        pass
-    else:
-        pass
-
-
-def moveMenu():
-    while True:
-        choices = [('w', 'Go North'), ('a', 'Go West'), ('s', 'Go South'), ('d', 'Go East')]
-        choice = user_choice(choices)
-            if choice == 'w':
-                coordinates = (tile.x, tile.y + 1)
-            elif choice == 'a':
-                coordinates = (tile.x -1, tile.y)
-            elif choice == 's':
-                coordinates = (tile.x, tile.y - 1)
-            elif choice == 'd':
-                coordinates = (tile.x + 1, tile.y)
-    return coordinates
+# ###################################################################
+#
+# Game End
+#
+# ###################################################################
+def game_over():
+    print(GAME_OVER)
+    time.sleep(2)
