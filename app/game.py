@@ -54,6 +54,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
     """
     game_run = True
     while game_run:
+        print(board)
         coordinates = player_move_menu(tile)  # target: Tile or None
         target = board.get_tile(coordinates)
 
