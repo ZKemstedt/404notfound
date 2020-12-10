@@ -115,7 +115,10 @@ def move_player(old: Tile, new: Tile) -> None:
         old (Tile): [description]
         new (Tile): [description]
     """
-    pass
+    new.player = old.player
+    old.player = None
+    old.explored = True
+    return new
 
 
 # ###################################################################
@@ -149,16 +152,13 @@ def flee_battle(player: Character) -> bool:
 
 
 def print_battle_menu(player, monsters):  # need to align hp values
-
     monster_info = ''
     for monster in monsters:
         monster_info += str(monster) + ' ' + str(monster.health)
-
         if (monsters.index(monster) != len(monsters)-1):
             monster_info += '\n'
 
     above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
-
     choices = [
         ('1', 'Attack'),
         ('2', 'Flee')
