@@ -77,6 +77,13 @@ class Board:
         print(f'[Control Flow] [Board] get_tile(({x},{y}))')
         return tile
 
+    def generate_exit_tile(self) -> None:
+        for row in random.sample(self.tiles, 1):
+            for tile in random.sample(row, 1):
+                # print(rnd_tile_number)
+                exit_tile = tile
+                exit_tile.exit = True
+
 
 if __name__ == "__main__":
     board = Board(4, 4)
@@ -91,4 +98,4 @@ if __name__ == "__main__":
     target = board.get_tile((1, 3))
     target.place_character(example_player)
     print(board)
-    
+
