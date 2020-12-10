@@ -84,7 +84,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
             # exit yes or no?
             # and then return True
 
-        print(f'[Control Flow] [Game Loop] move_player({tile}, {target})')
+        print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
         tile = move_player(tile, target)
 
 
