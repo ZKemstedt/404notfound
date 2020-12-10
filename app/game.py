@@ -10,7 +10,7 @@
 #
 #   Exit
 #
-from typing import List, Union
+from typing import List, Union, Tuple
 
 from app.board import Board, Tile
 from app.monster import Monster
@@ -31,7 +31,8 @@ def game_loop(board: Board, tile: Tile) -> bool:
     """
     game_run = True
     while game_run:
-        target = player_move_menu()  # target: Tile or None
+        coordinates = player_move_menu()  # target: Tile or None
+        target = board.get_tile(coordinates)
 
         if target is None:  # Sudden Game Exit
             return False  # Do not save
@@ -86,7 +87,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     pass
 
 
-def player_move_menu() -> Union[Tile, None]:
+def player_move_menu() -> Union[Tuple[int, int], None]:
     """[summary]
 
     Returns:
@@ -118,3 +119,18 @@ def pause_menu():
         pass
     else:
         pass
+
+
+def moveMenu():
+    while True:
+        choices = [('w', 'Go North'), ('a', 'Go West'), ('s', 'Go South'), ('d', 'Go East')]
+        choice = user_choice(choices)
+            if choice == 'w':
+                coordinates = (tile.x, tile.y + 1)
+            elif choice == 'a':
+                coordinates = (tile.x -1, tile.y)
+            elif choice == 's':
+                coordinates = (tile.x, tile.y - 1)
+            elif choice == 'd':
+                coordinates = (tile.x + 1, tile.y)
+    return coordinates
