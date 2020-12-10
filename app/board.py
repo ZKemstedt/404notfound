@@ -55,7 +55,7 @@ class Board:
             for row in range(0, self.sizex):
                 tile = self.tiles[row][column-1]
                 tile_string = str(tile)
-                display_string += f'{tile_string}   '
+                display_string += f'[ {tile_string} ]  '
             display_string += '\n'
 
         return (display_string)
