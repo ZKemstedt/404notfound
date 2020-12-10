@@ -9,12 +9,24 @@ def moveMenu():
 
                 if move.lower() == 'w':
                     tile[y+1]
+                    return get_tile
+                        if get_tile == None
+                            pass
                 elif move.lower() == 'a':
                     tile[x-1]
+                    return get_tile
+                        if get_tile == None
+                            pass
                 elif move.lower() == 's':
                     tile[y-1]
+                    return get_tile
+                        if get_tile == None
+                            pass
                 elif move.lower() == 'd':
                     tile[x+1]
+                    return get_tile
+                        if get_tile == None
+                            pass
                 else:
                     print('Not a valid choice, try again')
-                    return
+                    pass
