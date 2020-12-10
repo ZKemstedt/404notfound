@@ -10,7 +10,9 @@
 #
 #   Exit
 #
+import random
 from typing import List, Union, Tuple
+
 
 from app.board import Board, Tile
 from app.monster import Monster
@@ -86,6 +88,18 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     """
     # if dead --> game_over()
     pass
+
+
+def flee_battle(player: Character) -> bool:
+    flee_chance = player.evasion * 10
+    random_roll = random.randint(0, 100)
+    if player.__class__.__name__ == "Wizard":
+        flee_chance = 80
+    if flee_chance > random_roll:
+        print('You managed to escape!\n')
+        return True
+    print('You failed to escape.\n')
+    return False
 
 
 def print_battle_menu(player, monsters):  # need to align hp values

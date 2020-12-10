@@ -49,17 +49,18 @@ def load_character(name: str) -> Union[Character, None]:
 
     _name = data.get(name, default=None)
     _class = data.get('class', default=None)
+    _treasure = data.get('treasure', default=None)
     if _name is None:
         print(f'No character with the name {name} exist!')
     elif _class is None:
         print('The class of the character is invalid!')
     else:
         if _class == 'Knight':
-            character = Knight(_name)
+            character = Knight(_name, _treasure)
         elif _class == 'Wizard':
-            character = Wizard(_name)
+            character = Wizard(_name, _treasure)
         elif _class == 'Thief':
-            character = Thief(_name)
+            character = Thief(_name, _treasure)
         return character
     return None
 
