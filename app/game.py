@@ -55,27 +55,37 @@ def game_loop(board: Board, tile: Tile) -> bool:
     game_run = True
     while game_run:
         print(board)
-        coordinates = player_move_menu(tile)  # target: Tile or None
+
+        coordinates = player_move_menu(tile)
+        # sudden Game Exit
+        if coordinates is None:
+            return False
         target = board.get_tile(coordinates)
-
-        if target is None:  # Sudden Game Exit
-            return False  # Do not save
-
+        # out of bounds
+        if target is None:
+            print('You run into a wall, it hurt your head a bit but you\'ll survive.')
+            continue
+        # battle
         if target.monsters:
             isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
                 game_over()
                 return False
-
+            if target.monsters:  # player fled from battle
+                target.explored = True
+                continue
+        # treasure
         if target.treasure:
-            pass  # player pickup treasure
-
+            print('[Control Flow] [Game Loop] target.treasure')
+            # player pickup treasure
+        # exit
         if target.exit:
+            print('[Control Flow] [Game Loop] target.exit')
             # exit yes or no?
             # and then return True
-            return True
 
-        move_player(tile, target)
+        print(f'[Control Flow] [Game Loop] move_player({tile}, {target})')
+        tile = move_player(tile, target)
 
 
 def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
