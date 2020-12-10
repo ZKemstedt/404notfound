@@ -1,30 +1,31 @@
-import character
-import monster
-import board
+from app import character
+from app import monster
+from app import board
 import random
+from app.helpers import user_choice
 
 
-def print_btl_menu(player): # need to add monsters
-    name_list = [[]]
-    #Temporary storing in list to get the print menu to work
-    name_list[0].append('Zombie')
-    #a = monster.health
-    #b = monster.name
-    name_list[0].append(1)
-    name_list.append([])
-    #Everything above this needs to be changed
-    full_str = ''
-    monster = 2
-    for _ in range(1): # in range monster
-        full_str += name_list[_][0] + '\t\t' + str(name_list[_][1]) + '\n'
-    full_str = full_str[:-1]    #remove last NewLine
-    
+def print_battle_menu(player, monsters):  # need to add monsters
+    #name_list = [[]]
+    #name_list[0].append('Zombie')
+    #name_list[0].append(1)
+   # name_list.append([])
+    #full_str = ''
+    #for _ in range(1): # in range monster
+    #    full_str += name_list[_][0] + '\t\t' + str(name_list[_][1]) + '\n'
+    #full_str = full_str[:-1]    #remove last NewLine
+    choices = [
+        ('1', 'Attack'),
+        ('2', 'Flee')
+    ]
+    user_choice(choices)
+
     menu_choice = input(f"""
 Name\t\tHealth
-- - - - - - - - - - - 
+- - - - - - - - - - -
 {full_str}
 {player.name}\t\t{player.health}
-- - - - - - - - - - - 
+- - - - - - - - - - -
 [ 1 ] Attack
 [ 2 ] Flee\n""")
     return menu_choice
@@ -58,7 +59,7 @@ def fight(player):
         attack_value = dice(player.power)
         #attack value is the dice_sum, dice thrown for each point of power
 
-    
+
 def fighting(attacker, defender):
     print('axax')
     
