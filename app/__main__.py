@@ -42,7 +42,6 @@ TITLE = """
 
 
 def main_menu():
-
     print(TITLE)
     menu_loop = True
     while menu_loop:

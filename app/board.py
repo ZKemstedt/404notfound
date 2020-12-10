@@ -61,8 +61,11 @@ class Board:
         return (display_string)
 
     def get_tile(self, coordinates: Tuple[int, int]) -> Tile:
-        x, y = coordinates
-        tile = self.tiles[x][y]
+        try:
+            x, y = coordinates
+            tile = self.tiles[x][y]
+        except IndexError:
+            return None
         print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
         return tile
 

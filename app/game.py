@@ -16,6 +16,8 @@ from app.board import Board, Tile
 from app.monster import Monster
 from app.character import Character
 
+import time
+
 
 def game_loop(board: Board, tile: Tile) -> bool:
     """Game Flow - Game Loop
@@ -38,6 +40,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
         if target.monsters:
             isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
+                game_over()
                 return False
 
         if target.treasure:
@@ -51,6 +54,25 @@ def game_loop(board: Board, tile: Tile) -> bool:
         move_player(tile, target)
 
 
+def game_over():
+    print("""
+              _______       ____      ___   ___   _______
+             /  ,____\\     /    \\    |   \\_/   | |  ,____|
+            |  |  ____    /  /\\  \\   |         | |  |__
+            |  | |__  |  /  /__\\  \\  |  |`-´|  | |   __|
+            |  |___|  | /  ______  \\ |  |   |  | |  |____
+             \\_______/ /__/      \\__\\|  |   |__| |_______|
+              _____  ___      ___  _______   _______     __
+             /  _  \\ \\  \\    /  / |   ____| |   _   \\   |  |
+            /  | |  \\ \\  \\  /  /  |  |__    |  |_|   \\  |  |
+           |   | |   | \\  \\/  /   |   __|   |   _   /   |__|
+            \\   -   /   \\    /    |  |____  |  |  \\  \\   __
+             \\_____/     \\__/     |_______| |__|   \\__| |__|
+
+        """)
+    time.sleep(2)
+
+
 def battle(player: Character, monsters: List[Monster]) -> bool:
     """Game Flow - Battle Loop
 
@@ -61,6 +83,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     Returns:
         bool: is the user still alive?
     """
+    # if dead --> game_over()
     pass
 
 
@@ -93,3 +116,18 @@ def pause_menu():
         pass
     else:
         pass
+
+
+def moveMenu():
+    while True:
+        choices = [('w', 'Go North'), ('a', 'Go West'), ('s', 'Go South'), ('d', 'Go East')]
+        choice = user_choice(choices)
+            if choice == 'w':
+                coordinates = (tile.x, tile.y + 1)
+            elif choice == 'a':
+                coordinates = (tile.x -1, tile.y)
+            elif choice == 's':
+                coordinates = (tile.x, tile.y - 1)
+            elif choice == 'd':
+                coordinates = (tile.x + 1, tile.y)
+    return coordinates
