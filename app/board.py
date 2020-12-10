@@ -55,14 +55,17 @@ class Board:
             for row in range(0, self.sizex):
                 tile = self.tiles[row][column-1]
                 tile_string = str(tile)
-                display_string += f'{tile_string}   '
+                display_string += f'[ {tile_string} ]  '
             display_string += '\n'
 
         return (display_string)
 
     def get_tile(self, coordinates: Tuple[int, int]) -> Tile:
-        x, y = coordinates
-        tile = self.tiles[x][y]
+        try:
+            x, y = coordinates
+            tile = self.tiles[x][y]
+        except IndexError:
+            return None
         print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
         return tile
 

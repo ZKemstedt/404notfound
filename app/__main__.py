@@ -24,20 +24,20 @@ from app.save_load_data import load_character, save_character
 from app.game import game_loop
 
 TITLE = """
-        __________                                                                            __
-    |    __     \\   ___    ___  ____      __    ________   ________  ___    ___  ____     |  |
-    |   |   \\    \\ |   |  |   ||     \\   |  |  /   _____\\ |   _____||   |  |   ||     \\   |  |
-    |   |    |    ||   |  |   ||  |\\  \\  |  | /  /   ___  |  |____  |   |  |   ||  |\\  \\  |  |
-    |   |   /    / |   |  |   ||  | \\  \\ |  ||   |  |_  | |   ____| |   |  |   ||  | \\  \\ |  |
-    |    --     /  |   |__|   ||  |  \\  \\|  | \\   \\__/  / |  |_____ |   |__|   ||  |  \\  \\|  |
-        ----------     \\________/ |__|   \\_____|   \\______/  |________| \\________/ |__|   \\_____|
-                                ______    ___    ___  ____      __
-                            |   __  \\ |   |  |   ||     \\   |  |
-                            |  |  |  ||   |  |   ||  |\\  \\  |  |
-                            |   --  / |   |  |   ||  | \\  \\ |  |
-                            |  |\\   \\ |   |__|   ||  |  \\  \\|  |
-                            |__| \\___\\ \\________/ |  |   \\_____|
-                                                    |__|
+         __________                                                                            __
+        |    __     \\   ___    ___  ____      __    ________   ________    _______   ____     |  |
+        |   |   \\    \\ |   |  |   ||     \\   |  |  /   _____\\ |   _____| /   __    \\|     \\   |  |
+        |   |    |    ||   |  |   ||  |\\  \\  |  | /  /   ___  |  |____  |   /  \\   ||  |\\  \\  |  |
+        |   |   /    / |   |  |   ||  | \\  \\ |  ||   |  |_  | |   ____| |  |    |  ||  | \\  \\ |  |
+        |    --     /  |   |__|   ||  |  \\  \\|  | \\   \\__/  / |  |_____ |   \\__/   ||  |  \\  \\|  |
+         ----------     \\________/ |__|   \\_____|   \\______/  |________| \\________/ |__|   \\_____|
+                                 ______    ___    ___  ____      __
+                                |   __  \\ |   |  |   ||     \\   |  |
+                                |  |  |  ||   |  |   ||  |\\  \\  |  |
+                                |   --  / |   |  |   ||  | \\  \\ |  |
+                                |  |\\   \\ |   |__|   ||  |  \\  \\|  |
+                                |__| \\___\\ \\________/ |  |   \\_____|
+                                                      |__|
 """
 
 
@@ -165,7 +165,7 @@ def select_start_position(board: Board, character: Character) -> Tile:
     east = board.sizex - 1
     west = 0
 
-    above = '\nChoose in wich corner of the baord to start your adventure.'
+    above = '\nChoose in which corner of the board to start your adventure.'
     choices = [
             ('1', 'Top left (North West)'),
             ('2', 'Top Right (North East)'),
@@ -211,7 +211,8 @@ if __name__ == "__main__":
             ('2', 'Load Character'),
             ('3', 'Exit Game'),
         ]
-        choice = user_choice(choices, above=TITLE, exception='3')
+        sep = "\n                                        "
+        choice = user_choice(choices, above=TITLE, exception='3', separator=sep)
 
         if choice == '3':
             # print('[Control Flow] [Main Menu] exit')
