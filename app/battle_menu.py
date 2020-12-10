@@ -9,15 +9,19 @@ import board
 from helpers import user_choice
 
 
-def print_battle_menu(player, monsters):  # need to add monsters
-    # name_list = [[]]
-    # name_list[0].append('Zombie')
-    # name_list[0].append(1)
-    # name_list.append([])
-    # full_str = ''
-    # for _ in range(1): # in range monster
-    #    full_str += name_list[_][0] + '\t\t' + str(name_list[_][1]) + '\n'
-    # full_str = full_str[:-1]    #remove last NewLine
+def print_battle_menu(player, monsters):  # need to align hp values
+    
+    monster_info = ''
+    for _ in monsters:
+        monster_info += str(_) + ' ' + str(_.health)
+
+        if (monsters.index(_) != len(monsters)-1):
+            monster_info += '\n'
+
+    print('Name\tHealth\n- - - - - - - - - -')
+    print(f'{player.name} {player.health}')
+    print(monster_info + '\n- - - - - - - - - -')
+
     choices = [
         ('1', 'Attack'),
         ('2', 'Flee')
@@ -25,34 +29,18 @@ def print_battle_menu(player, monsters):  # need to add monsters
     choice = user_choice(choices)
     return choice
 
-#     menu_choice = input(f"""
-# Name\t\tHealth
-# - - - - - - - - - - -
-# {full_str}
-# {player.name}\t\t{player.health}
-# - - - - - - - - - - -
-# [ 1 ] Attack
-# [ 2 ] Flee\n""")
-#     return menu_choice
-
 
 def dice(x) -> int:
     dice_sum = 0
-    for _ in range(1,x+1):
-        print('_ ====' , _)
-        dice_sum += random.randint(1,6)
+    for _ in range(1, x+1):
+        print('_ ====', _)
+        dice_sum += random.randint(1, 6)
         print(dice_sum)
     return dice_sum
 
 
-# tile = board.Tile(0,0)
-# x = tile.monsters
-# x.append('scarymonsta')
-# x.append(1)
-
-
 def fight(player):
-    cmd = print_btl_menu(elsa)
+    cmd = print_battle_menu(elsa)
     # Player has entered fight and chosen 1, (fight!)
     if(cmd == '1'):
 
@@ -65,9 +53,15 @@ def fighting(attacker, defender):
 
 
 # fight(elsa)
+    
 
 if __name__ == "__main__":
     elsa = character.Character('Elsa', 15, 1, 4, 15)
     abbe = character.Character('Micke', 11, 2, 7, 9)
-    monster = monster.Monster(2, 3, 3, 4, 0.15)
+    monster = monster.Troll()
+    #monster.Monster(3, 4, 4, 6, 0.1, 'Orc')
+    #monster = monster.Monster(1, 3, 2, 7, 0.2, 'Giant Spider')
     print_battle_menu(elsa, [monster])
+
+
+    

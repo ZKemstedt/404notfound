@@ -15,6 +15,7 @@ from typing import List, Union
 from app.board import Board, Tile
 from app.monster import Monster
 from app.character import Character
+from helpers import user_choice
 
 
 def game_loop(board: Board, tile: Tile) -> bool:
@@ -61,6 +62,27 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
         bool: is the user still alive?
     """
     pass
+
+
+def print_battle_menu(player, monsters):  # need to align hp values
+    
+    monster_info = ''
+    for _ in monsters:
+        monster_info += str(_) + ' ' + str(_.health)
+
+        if (monsters.index(_) != len(monsters)-1):
+            monster_info += '\n'
+
+    print('Name\tHealth\n- - - - - - - - - -')
+    print(f'{player.name} {player.health}')
+    print(monster_info + '\n- - - - - - - - - -')
+
+    choices = [
+        ('1', 'Attack'),
+        ('2', 'Flee')
+    ]
+    choice = user_choice(choices)
+    return choice
 
 
 def player_move_menu() -> Union[Tile, None]:
