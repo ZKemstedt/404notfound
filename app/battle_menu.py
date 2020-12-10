@@ -18,15 +18,13 @@ def print_battle_menu(player, monsters):  # need to align hp values
         if (monsters.index(_) != len(monsters)-1):
             monster_info += '\n'
 
-    print('Name\tHealth\n- - - - - - - - - -')
-    print(f'{player.name} {player.health}')
-    print(monster_info + '\n- - - - - - - - - -')
-
+    a = 'Name\tHealth\n- - - - - - - - - -\n' + player.name +' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+    
     choices = [
         ('1', 'Attack'),
         ('2', 'Flee')
     ]
-    choice = user_choice(choices)
+    choice = user_choice(choices, above=a)
     return choice
 
 

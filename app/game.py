@@ -65,7 +65,6 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
 
 
 def print_battle_menu(player, monsters):  # need to align hp values
-    
     monster_info = ''
     for _ in monsters:
         monster_info += str(_) + ' ' + str(_.health)
