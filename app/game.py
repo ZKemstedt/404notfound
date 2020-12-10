@@ -65,21 +65,21 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
 
 
 def print_battle_menu(player, monsters):  # need to align hp values
-    
-    monster_info = ''
-    for _ in monsters:
-        monster_info += str(_) + ' ' + str(_.health)
 
-        if (monsters.index(_) != len(monsters)-1):
+    monster_info = ''
+    for monster in monsters:
+        monster_info += str(monster) + ' ' + str(monster.health)
+
+        if (monsters.index(monster) != len(monsters)-1):
             monster_info += '\n'
 
-    a = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+    above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
 
     choices = [
         ('1', 'Attack'),
         ('2', 'Flee')
     ]
-    choice = user_choice(choices, above=a)
+    choice = user_choice(choices, above=above)
     return choice
 
 
