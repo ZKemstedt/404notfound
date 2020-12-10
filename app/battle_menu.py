@@ -6,31 +6,32 @@ from app.helpers import user_choice
 
 
 def print_battle_menu(player, monsters):  # need to add monsters
-    #name_list = [[]]
-    #name_list[0].append('Zombie')
-    #name_list[0].append(1)
-   # name_list.append([])
-    #full_str = ''
-    #for _ in range(1): # in range monster
+    # name_list = [[]]
+    # name_list[0].append('Zombie')
+    # name_list[0].append(1)
+    # name_list.append([])
+    # full_str = ''
+    # for _ in range(1): # in range monster
     #    full_str += name_list[_][0] + '\t\t' + str(name_list[_][1]) + '\n'
-    #full_str = full_str[:-1]    #remove last NewLine
+    # full_str = full_str[:-1]    #remove last NewLine
     choices = [
         ('1', 'Attack'),
         ('2', 'Flee')
     ]
-    user_choice(choices)
+    choice = user_choice(choices)
+    return choice
 
-    menu_choice = input(f"""
-Name\t\tHealth
-- - - - - - - - - - -
-{full_str}
-{player.name}\t\t{player.health}
-- - - - - - - - - - -
-[ 1 ] Attack
-[ 2 ] Flee\n""")
-    return menu_choice
+#     menu_choice = input(f"""
+# Name\t\tHealth
+# - - - - - - - - - - -
+# {full_str}
+# {player.name}\t\t{player.health}
+# - - - - - - - - - - -
+# [ 1 ] Attack
+# [ 2 ] Flee\n""")
+#     return menu_choice
 
-    
+
 elsa = character.Character('Elsa', 15, 1, 4, 15)
 abbe = character.Character('micke', 11, 2, 7, 9)
 monster = monster.Monster(2, 3, 3, 4, 0.15)
