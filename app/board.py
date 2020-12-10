@@ -15,6 +15,7 @@ class Tile:
         self.player = None
         self.monsters = []
         self.treasure = None
+        self.exit = False
 
     def __str__(self) -> str:
         if self.player:
