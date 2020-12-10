@@ -15,6 +15,7 @@ from typing import List, Union, Tuple
 from app.board import Board, Tile
 from app.monster import Monster
 from app.character import Character
+from helpers import user_choice
 
 import time
 
@@ -85,6 +86,25 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     """
     # if dead --> game_over()
     pass
+
+
+def print_battle_menu(player, monsters):  # need to align hp values
+
+    monster_info = ''
+    for monster in monsters:
+        monster_info += str(monster) + ' ' + str(monster.health)
+
+        if (monsters.index(monster) != len(monsters)-1):
+            monster_info += '\n'
+
+    above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+
+    choices = [
+        ('1', 'Attack'),
+        ('2', 'Flee')
+    ]
+    choice = user_choice(choices, above=above)
+    return choice
 
 
 def player_move_menu() -> Union[Tuple[int, int], None]:
