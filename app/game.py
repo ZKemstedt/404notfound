@@ -95,8 +95,13 @@ def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
         tuple: The coordinates the player is trying to move towards
         None: The player decided to stop playing
     """
-    choices = [('w', 'Go North'), ('a', 'Go West'), ('s', 'Go South'), ('d', 'Go East')]
-    choice = user_choice(choices)
+    choices = [
+        ('w', 'Go North'),
+        ('a', 'Go West'),
+        ('s', 'Go South'),
+        ('d', 'Go East'),
+    ]
+    choice = user_choice(choices, exception='0')
     if choice == 'w':
         coordinates = (tile.x, tile.y + 1)
     elif choice == 'a':
@@ -105,6 +110,8 @@ def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
         coordinates = (tile.x, tile.y - 1)
     elif choice == 'd':
         coordinates = (tile.x + 1, tile.y)
+    elif choice == '0':
+        return None
     return coordinates
 
 
