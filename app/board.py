@@ -20,7 +20,7 @@ class Tile:
         if self.player:
             return 'P'
         elif self.explored:
-            pass  # TODO
+            return '/'
         else:
             return 'X'
 
