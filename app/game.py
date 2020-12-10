@@ -108,6 +108,7 @@ def move_player(old: Tile, new: Tile) -> None:
     new.player = old.player
     old.player = None
     old.explored = True
+    return new
 
 
 # To be merged into Game Loop Menu / Player Move Loop
