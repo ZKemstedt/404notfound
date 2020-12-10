@@ -18,11 +18,11 @@ class Tile:
 
     def __str__(self) -> str:
         if self.player:
-            return 'P'
+            return '[P]'
         elif self.explored:
-            return '/'
+            return '[/]'
         else:
-            return 'X'
+            return '[X]'
 
     def place_character(self, player):
         self.player = player
@@ -83,3 +83,4 @@ if __name__ == "__main__":
     target = board.get_tile((1, 3))
     target.place_character(example_player)
     print(board)
+    
