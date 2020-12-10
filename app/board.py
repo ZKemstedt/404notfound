@@ -1,4 +1,5 @@
 from typing import Tuple
+import random
 
 BOARDSIZE = {
     '1': (4, 4),
@@ -36,12 +37,18 @@ class Tile:
     def generate_treasures(self) -> None:  # TODO
         pass
 
+    def exit_tile(self) -> bool:
+        if self.exit:
+            return True
+        return False
+
 
 class Board:
     def __init__(self, x: int, y: int):
         self.sizex = x
         self.sizey = y
         self.tiles = []
+        self.generated_exit = False
 
         for col in range(x):
             rows = []
