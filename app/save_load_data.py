@@ -47,19 +47,25 @@ def load_character(name: str) -> Union[Character, None]:
         print(f'An error occured when trying to load data!\n {type(e)}: {e}')
         return None
 
-    _name = data.get(name, default=None)
-    _class = data.get('class', default=None)
-    if _name is None:
+    char_data = data.get(name, None)
+    if char_data is None:
         print(f'No character with the name {name} exist!')
-    elif _class is None:
-        print('The class of the character is invalid!')
+        return None
+
+    _class = char_data.get('class', None)
+    _treasure = char_data.get('treasure', None)
+    if _class is None:
+        print('The character doesn\'t have a class!')
     else:
         if _class == 'Knight':
-            character = Knight(_name)
+            character = Knight(name, _treasure)
         elif _class == 'Wizard':
-            character = Wizard(_name)
+            character = Wizard(name, _treasure)
         elif _class == 'Thief':
-            character = Thief(_name)
+            character = Thief(name, _treasure)
+        else:
+            print('The character is not a valid class!')
+            return None
         return character
     return None
 

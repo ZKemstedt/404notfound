@@ -165,7 +165,7 @@ def select_start_position(board: Board, character: Character) -> Tile:
     east = board.sizex - 1
     west = 0
 
-    above = '\nChoose in wich corner of the baord to start your adventure.'
+    above = '\nChoose in which corner of the board to start your adventure.'
     choices = [
             ('1', 'Top left (North West)'),
             ('2', 'Top Right (North East)'),
@@ -174,13 +174,13 @@ def select_start_position(board: Board, character: Character) -> Tile:
         ]
     choice = user_choice(choices, above=above)
     if choice == "1":
-        coordinates = (north, west)
+        coordinates = (west, north)
     elif choice == "2":
-        coordinates = (north, east)
+        coordinates = (east, north)
     elif choice == "3":
-        coordinates = (south, west)
+        coordinates = (west, south)
     elif choice == "4":
-        coordinates = (south, east)
+        coordinates = (east, south)
 
     tile = board.get_tile(coordinates)
     return tile

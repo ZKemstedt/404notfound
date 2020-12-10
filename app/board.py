@@ -15,6 +15,7 @@ class Tile:
         self.player = None
         self.monsters = []
         self.treasure = None
+        self.exit = False
 
     def __str__(self) -> str:
         if self.player:
@@ -55,7 +56,7 @@ class Board:
             for row in range(0, self.sizex):
                 tile = self.tiles[row][column-1]
                 tile_string = str(tile)
-                display_string += f'{tile_string}   '
+                display_string += f'[ {tile_string} ]  '
             display_string += '\n'
 
         return (display_string)
@@ -66,7 +67,7 @@ class Board:
             tile = self.tiles[x][y]
         except IndexError:
             return None
-        print(f'(testing) [Control Flow] Board -> get_tile(({x},{y}))')
+        print(f'[Control Flow] [Board] get_tile(({x},{y}))')
         return tile
 
 
