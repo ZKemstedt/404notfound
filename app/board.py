@@ -18,12 +18,14 @@ class Tile:
         self.exit = False
 
     def __str__(self) -> str:
+        tile_format = ' [ {} ] '
         if self.player:
-            return '[P]'
+            string = 'P'
         elif self.explored:
-            return '[/]'
+            string = '/'
         else:
-            return '[X]'
+            string = 'X'
+        return tile_format.format(string)
 
     def place_character(self, player):
         self.player = player
@@ -56,7 +58,7 @@ class Board:
             for row in range(0, self.sizex):
                 tile = self.tiles[row][column-1]
                 tile_string = str(tile)
-                display_string += f'[ {tile_string} ]  '
+                display_string += f'{tile_string}'
             display_string += '\n'
 
         return (display_string)
@@ -84,4 +86,3 @@ if __name__ == "__main__":
     target = board.get_tile((1, 3))
     target.place_character(example_player)
     print(board)
-    
