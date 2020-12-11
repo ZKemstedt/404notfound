@@ -94,6 +94,7 @@ class Board:
                 for tile in random.sample(row, 1):
                     exit_tile = tile
                     exit_tile.exit = True
+            self.generated_exit = True
         else:
             print('The board already has an exit!')
 
