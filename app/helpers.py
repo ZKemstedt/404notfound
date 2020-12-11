@@ -1,3 +1,4 @@
+import random
 from typing import List, Tuple, Optional
 
 
@@ -57,3 +58,12 @@ def user_choice(
                 return exception
             elif error_string:
                 print(error_string)
+
+
+def dice(n) -> int:
+    dice_sum = 0
+    for x in range(n):
+        b = random.randint(1, 6)
+
+        dice_sum += b
+    return dice_sum
