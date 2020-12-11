@@ -21,7 +21,7 @@ class Character(object):
 
 
 class Knight(Character):
-    def __init__(self, name, treasure= 0):
+    def __init__(self, name, treasure=0):
         super().__init__(name, 5, 9, 6, 4, treasure)
 
     def special_power(self):
@@ -29,7 +29,7 @@ class Knight(Character):
 
 
 class Wizard(Character):
-    def __init__(self, name, treasure= 0):
+    def __init__(self, name, treasure=0):
         super().__init__(name, 6, 4, 9, 5, treasure)
 
     def special_power(self):
@@ -42,5 +42,5 @@ class Wizard(Character):
 
 
 class Thief(Character):
-    def __init__(self, name, treasure= 0):
+    def __init__(self, name, treasure=0):
         super().__init__(name, 7, 5, 5, 7, treasure)
