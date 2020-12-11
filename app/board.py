@@ -1,4 +1,6 @@
 from typing import Tuple
+from app.helpers import user_choice
+import random
 
 BOARDSIZE = {
     '1': (4, 4),
@@ -38,12 +40,28 @@ class Tile:
     def generate_treasures(self) -> None:  # TODO
         pass
 
+    def exit_tile(self) -> bool:
+        choices = [
+            ('y', 'Leave and save'),
+            ('n', 'Stay and explore'),
+        ]
+        if self.exit:
+            print('You found the exit!\n')
+            print('Do you want to leave?\n')
+            choice = user_choice(choices)
+            if choice == 'y':
+                return True
+            elif choice == 'n':
+                # Optional: Add in main game_loop if false, put some marker on this tile (after player moved).
+                return False
+
 
 class Board:
     def __init__(self, x: int, y: int):
         self.sizex = x
         self.sizey = y
         self.tiles = []
+        self.generated_exit = False
 
         for col in range(x):
             rows = []
@@ -71,6 +89,16 @@ class Board:
             return None
         print(f'[Control Flow] [Board] get_tile(({x},{y}))')
         return tile
+
+    def generate_exit_tile(self) -> None:
+        if self.generated_exit is False:
+            for row in random.sample(self.tiles, 1):
+                for tile in random.sample(row, 1):
+                    exit_tile = tile
+                    exit_tile.exit = True
+            self.generated_exit = True
+        else:
+            print('The board already has an exit!')
 
 
 if __name__ == "__main__":
