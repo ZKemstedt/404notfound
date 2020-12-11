@@ -52,7 +52,6 @@ def game_loop(board: Board, tile: Tile) -> bool:
     Returns:
         bool: True if user cleared the board, False if the user died
     """
-    treasure_taken = False
     game_run = True
     while game_run:
         print(board)
@@ -77,13 +76,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
                 continue
         # treasure
         if target.treasure:
-            sum_treasure()
-            print("treasure added")
-            treasure_taken = True
-
-            if target.treasure:
-                treasure_taken = True
-                continue
+            sum_treasure(tile, target)
 
         # exit
         if target.exit:
@@ -95,8 +88,11 @@ def game_loop(board: Board, tile: Tile) -> bool:
         tile = move_player(tile, target)
 
 
-def sum_treasure(character, treasure):
-    character.treasure += treasure.value
+def sum_treasure(tile, target):
+    tile.player.treasure += target.treasure.value
+
+    print("treasure added")
+    target.treasure = None
 
 
 def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
