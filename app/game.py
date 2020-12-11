@@ -36,6 +36,19 @@ GAME_OVER = """
 
         """
 
+BATTLE_STARTED = """
+                 ____    _  _____ _____ _     _____
+                | __ )  / \\|_   _|_   _| |   | ____|
+                |  _ \\ / _ \\ | |   | | | |   |  _|
+                | |_) / ___ \\| |   | | | |___| |___
+              __|____/_/  _\\_\\_|___|_|_|_____|_____|   _
+            / ___|_   _|/ \\  |  _ \\_   _| ____|  _ \\  | |
+            \\___ \\ | | / _ \\ | |_) || | |  _| | | | | | |
+             ___) || |/ ___ \\|  _ < | | | |___| |_| | |_|
+            |____/ |_/_/   \\_\\_| \\_\\|_| |_____|____/  (_)
+
+            """
+
 
 # ###################################################################
 #
@@ -150,6 +163,23 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     Returns:
         bool: is the user still alive?
     """
+
+    print(BATTLE_STARTED)
+    time.sleep(2)
+    battle_loop = True
+    while battle_loop:
+        choice = print_battle_menu(player, monsters)  # ??????????????
+        if choice == 1:
+            # Attack
+            # check om spelare dör
+            pass
+        else:
+            # if choice 2 -> Flee
+            # check om spelare kan fly
+            flee_battle(player)
+
+
+def attack():  # ??????????????
     pass
 
 
