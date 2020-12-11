@@ -50,6 +50,7 @@ class Tile:
             if choice == 'y':
                 return True
             elif choice == 'n':
+                # Optional: Add in main game_loop if false, put some marker on this tile (after player moved).
                 return False
 
 
