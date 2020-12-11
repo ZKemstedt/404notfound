@@ -95,7 +95,7 @@ class Board:
                     exit_tile = tile
                     exit_tile.exit = True
         else:
-            print('The board already has en exit!')
+            print('The board already has an exit!')
 
 
 if __name__ == "__main__":
