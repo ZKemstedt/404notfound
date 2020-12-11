@@ -89,10 +89,13 @@ class Board:
         return tile
 
     def generate_exit_tile(self) -> None:
-        for row in random.sample(self.tiles, 1):
-            for tile in random.sample(row, 1):
-                exit_tile = tile
-                exit_tile.exit = True
+        if self.generated_exit is False:
+            for row in random.sample(self.tiles, 1):
+                for tile in random.sample(row, 1):
+                    exit_tile = tile
+                    exit_tile.exit = True
+        else:
+            print('The board already has en exit!')
 
 
 if __name__ == "__main__":
