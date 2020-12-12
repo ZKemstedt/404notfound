@@ -16,8 +16,8 @@ from typing import List, Union, Tuple
 
 from app.board import Board, Tile
 from app.monster import Monster
-from app.character import Character
-from app.helpers import user_choice
+from app.character import Character, Thief
+from app.helpers import user_choice, dice, who_starts_battle_dice
 
 
 GAME_OVER = """
@@ -167,8 +167,8 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     print(BATTLE_STARTED)
     time.sleep(2)
     # roll dice on who starts the batttle
-    roll_dice_player = roll_dice()
-    roll_dice_monster = roll_dice()
+    roll_dice_player = who_starts_battle_dice()
+    roll_dice_monster = who_starts_battle_dice()
     print('\n\nTime to roll the dice on who starts the battle!')
     time.sleep(1)
     print(f'\n{player}: {roll_dice_player}')
@@ -178,40 +178,26 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     # - - - - - check vem som börjar - - - - -
     if roll_dice_monster > roll_dice_player:
         print(f'Oops, {monsters[Monster]} starts the battle!')
-        # monster attack
-        attack('monster')
+        # monster attack, player defend
+        battle_attack(monsters[Monster], player)
     else:
         battle_loop = True
         while battle_loop:
             if battle(player) is None:
-                game_over()
-            choice = print_battle_menu(player, monsters)  # ??????????????
+                game_over()  # eller --> /return False ?
+            choice = print_battle_menu(player, monsters)
             if choice == '1':
-                # player attack
-                attack('player')
+                # player attack, monster defend
+                battle_attack(player, monsters[Monster])
             elif choice == '2':
                 # if choice 2 -> Flee
                 # check om spelare kan fly
                 flee_battle(player)
 
 
-def roll_dice():
-    dice_result = random.randint(0, 100)
-    return dice_result
-
-
-def attack(turn):
-    if turn == 'monster':
-        # Monster attack
-        pass
-    elif turn == 'player':
-        # Player attack
-        pass
-
-
 def flee_battle(player: Character) -> bool:
     flee_chance = player.evasion * 10
-    random_roll = roll_dice()
+    random_roll = random.randint(0, 100)
     if player.__class__.__name__ == "Wizard":
         flee_chance = 80
     if flee_chance > random_roll:
@@ -222,19 +208,43 @@ def flee_battle(player: Character) -> bool:
 
 
 def print_battle_menu(player, monsters):  # need to align hp values
+
     monster_info = ''
-    for monster in monsters:
-        monster_info += str(monster) + ' ' + str(monster.health)
-        if (monsters.index(monster) != len(monsters)-1):
+    for monsterrr in monsters:
+        monster_info += str(monsterrr) + ' ' + str(monsterrr.health)
+
+        if (monsters.index(monsterrr) != len(monsters)-1):
             monster_info += '\n'
 
     above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+
     choices = [
         ('1', 'Attack'),
         ('2', 'Flee')
     ]
     choice = user_choice(choices, above=above)
     return choice
+
+
+def battle_attack(attacker, defender) -> bool:
+    print(f'{attacker.name} attacking!\n')
+
+    if(dice(attacker.power) > dice(defender.evasion)):
+        print(f'{defender.name} was sucessfully hit!\n')
+
+        if issubclass(attacker.__class__, Thief) and not random.randint(0, 3):
+            print('CRITICAL HIT! Dealt 2 damage')
+            defender.health -= 2
+        else:
+            defender.health -= 1
+            print('Dealth 1 damage')
+
+        if(defender.health == 0):
+            print(f'{defender.name} has been slain\n')
+            return False
+    else:
+        print('Roll was unsucessfull\nAttack missed!\n')
+    return True
 
 
 # ###################################################################
