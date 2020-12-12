@@ -1,6 +1,6 @@
 from typing import Tuple
-from helpers import user_choice
-from monster import GiantSpider, Skeleton, Orc, Troll
+from app.helpers import user_choice
+from app.monster import GiantSpider, Skeleton, Orc, Troll
 from treasure import Coins, Pouch, GoldJewelry, Gemstone, SmallTreasureChest
 import random
 
@@ -96,20 +96,20 @@ class Board:
         else:
             print('The board already has an exit!')
 
-    def generate_monster(self) -> None:
-        monster_list = {'Giantspider': 20, 'Skeleton': 15, 'Orc': 10, 'Troll': 5}
-        if self.generated_monsters is False:
-            for row in self.tiles:
-                for tile in row:
-                    for item in monster_list:
-                        random_roll = random.randint(0, 100)
-                        monster_percent = monster_list.get(item)
-                        if random_roll <= monster_percent:
-                            tile.monsters.append(item)
-                            print(tile.monsters)
-            self.generated_monsters = True
-        else:
-            print('The board already has monsters!')
+    # def generate_monster(self) -> None:
+    #     monster_list = {'Giantspider': 20, 'Skeleton': 15, 'Orc': 10, 'Troll': 5}
+    #     if self.generated_monsters is False:
+    #         for row in self.tiles:
+    #             for tile in row:
+    #                 for item in monster_list:
+    #                     random_roll = random.randint(0, 100)
+    #                     monster_percent = monster_list.get(item)
+    #                     if random_roll <= monster_percent:
+    #                         tile.monsters.append(item)
+    #                         print(tile.monsters)
+    #         self.generated_monsters = True
+    #     else:
+    #         print('The board already has monsters!')
 
     def generate_treasure(self) -> None:
         treasure_list = {'Coins': 40, 'Pouch': 20, 'GoldJewelry': 15, 'Gemstone': 10, 'SmallTreasureChest': 5}
