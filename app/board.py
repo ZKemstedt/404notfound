@@ -1,5 +1,6 @@
 from typing import Tuple
-from app.helpers import user_choice
+from helpers import user_choice
+from monster import Monster, GiantSpider, Skeleton, Orc, Troll
 import random
 
 BOARDSIZE = {
@@ -16,7 +17,7 @@ class Tile:
         self.explored = False
         self.player = None
         self.monsters = []
-        self.treasure = None
+        self.treasure = []
         self.exit = False
 
     def __str__(self) -> str:
@@ -31,14 +32,6 @@ class Tile:
 
     def place_character(self, player):
         self.player = player
-
-    # Not yet sure if this will be a method to Board or Tile.
-    def generate_monsters(self) -> None:  # TODO
-        pass
-
-    # Not yet sure if this will be a method to Board or Tile.
-    def generate_treasures(self) -> None:  # TODO
-        pass
 
     def exit_tile(self) -> bool:
         choices = [
@@ -62,6 +55,8 @@ class Board:
         self.sizey = y
         self.tiles = []
         self.generated_exit = False
+        self.generated_monsters = False
+        self.generated_treasures = False
 
         for col in range(x):
             rows = []
@@ -100,17 +95,27 @@ class Board:
         else:
             print('The board already has an exit!')
 
+    def generate_monster(self) -> None:
+        monster_list = {'Giantspider': 20, 'Skeleton': 15, 'Orc': 10, 'Troll': 5}
+        if self.generated_monsters is False:
+            for row in self.tiles:
+                for tile in row:
+                    for item in monster_list:
+                        random_roll = random.randint(0, 100)
+                        monster_percent = monster_list.get(item)
+                        if random_roll <= monster_percent:
+                            tile.monsters.append(item)
+                            print(tile.monsters)
+            self.generated_monsters = True
+        else:
+            print('The board already has monsters!')
+
+    def generate_treasure(self) -> None:
+        pass
+
 
 if __name__ == "__main__":
     board = Board(4, 4)
     print(board)
 
-    example_player = ':)'
-
-    tile = board.get_tile((0, 3))
-    tile.place_character(example_player)
-    print(board)
-
-    target = board.get_tile((1, 3))
-    target.place_character(example_player)
-    print(board)
+    board.generate_monster()
