@@ -16,8 +16,8 @@ from typing import List, Union, Tuple
 
 from app.board import Board, Tile
 from app.monster import Monster
-from app.character import Character
-from app.helpers import user_choice
+from app.character import Character, Thief
+from app.helpers import user_choice, dice
 
 
 GAME_OVER = """
@@ -153,6 +153,46 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     pass
 
 
+def print_battle_menu(player, monsters):  # need to align hp values
+
+    monster_info = ''
+    for monsterrr in monsters:
+        monster_info += str(monsterrr) + ' ' + str(monsterrr.health)
+
+        if (monsters.index(monsterrr) != len(monsters)-1):
+            monster_info += '\n'
+
+    above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+
+    choices = [
+        ('1', 'Attack'),
+        ('2', 'Flee')
+    ]
+    choice = user_choice(choices, above=above)
+    return choice
+
+
+def battle_attack(attacker, defender) -> bool:
+    print(f'{attacker.name} attacking!\n')
+
+    if(dice(attacker.power) > dice(defender.evasion)):
+        print(f'{defender.name} was sucessfully hit!\n')
+
+        if issubclass(attacker.__class__, Thief) and not random.randint(0, 3):
+            print('CRITICAL HIT! Dealt 2 damage')
+            defender.health -= 2
+        else:
+            defender.health -= 1
+            print('Dealth 1 damage')
+
+        if(defender.health == 0):
+            print(f'{defender.name} has been slain\n')
+            return False
+    else:
+        print('Roll was unsucessfull\nAttack missed!\n')
+    return True
+
+
 def flee_battle(player: Character) -> bool:
     flee_chance = player.evasion * 10
     random_roll = random.randint(0, 100)
@@ -163,22 +203,6 @@ def flee_battle(player: Character) -> bool:
         return True
     print('You failed to escape.\n')
     return False
-
-
-def print_battle_menu(player, monsters):  # need to align hp values
-    monster_info = ''
-    for monster in monsters:
-        monster_info += str(monster) + ' ' + str(monster.health)
-        if (monsters.index(monster) != len(monsters)-1):
-            monster_info += '\n'
-
-    above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
-    choices = [
-        ('1', 'Attack'),
-        ('2', 'Flee')
-    ]
-    choice = user_choice(choices, above=above)
-    return choice
 
 
 # ###################################################################
