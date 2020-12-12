@@ -166,26 +166,47 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
 
     print(BATTLE_STARTED)
     time.sleep(2)
+    # roll dice on who starts the batttle
+    roll_dice_player = roll_dice()
+    roll_dice_monster = roll_dice()
+    print('\n\nTime to roll the dice on who starts the battle!')
+    time.sleep(1)
+    print(f'\n{player}: {roll_dice_player}')
+    time.sleep(1)
+    print(f'{monsters[Monster]}: {roll_dice_monster}')
+    
+    # - - - - - check vem som börjar - - - - -
+
     battle_loop = True
     while battle_loop:
         choice = print_battle_menu(player, monsters)  # ??????????????
-        if choice == 1:
-            # Attack
+        if choice == '1':
+            # battle
+            if battle(player) is None:
+                game_over()
+            else:
+                # attack function
+                attack()
             # check om spelare dör
-            pass
-        else:
+        elif choice == '2':
             # if choice 2 -> Flee
             # check om spelare kan fly
             flee_battle(player)
 
 
+def roll_dice():
+    dice_result = random.randint(0, 100)
+    return dice_result
+
+
 def attack():  # ??????????????
+    # who starts?
     pass
 
 
 def flee_battle(player: Character) -> bool:
     flee_chance = player.evasion * 10
-    random_roll = random.randint(0, 100)
+    random_roll = roll_dice()
     if player.__class__.__name__ == "Wizard":
         flee_chance = 80
     if flee_chance > random_roll:
