@@ -1,6 +1,7 @@
 from typing import Tuple
 from helpers import user_choice
-from monster import Monster, GiantSpider, Skeleton, Orc, Troll
+from monster import GiantSpider, Skeleton, Orc, Troll
+from treasure import Coins, Pouch, GoldJewelry, Gemstone, SmallTreasureChest
 import random
 
 BOARDSIZE = {
@@ -17,7 +18,7 @@ class Tile:
         self.explored = False
         self.player = None
         self.monsters = []
-        self.treasure = []
+        self.treasures = []
         self.exit = False
 
     def __str__(self) -> str:
@@ -111,7 +112,27 @@ class Board:
             print('The board already has monsters!')
 
     def generate_treasure(self) -> None:
-        pass
+        treasure_list = {'Coins': 40, 'Pouch': 20, 'GoldJewelry': 15, 'Gemstone': 10, 'SmallTreasureChest': 5}
+        if self.generated_treasures is False:
+            for row in self.tiles:
+                for tile in row:
+                    for item in treasure_list:
+                        random_roll = random.randint(0, 100)
+                        treasure_percent = treasure_list.get(item)
+                        if random_roll <= treasure_percent:
+                            if item == 'Coins':
+                                tile.treasures.append(Coins())
+                            elif item == 'Pouch':
+                                tile.treasures.append(Pouch())
+                            elif item == 'GoldJewelry':
+                                tile.treasures.append(GoldJewelry())
+                            elif item == 'Gemstone':
+                                tile.treasures.append(Gemstone())
+                            elif item == 'SmallTreasureChest':
+                                tile.treasures.append(SmallTreasureChest())
+            self.generated_treasures = True
+        else:
+            print('The board already has treasures!')
 
 
 if __name__ == "__main__":
@@ -119,3 +140,4 @@ if __name__ == "__main__":
     print(board)
 
     board.generate_monster()
+    board.generate_treasure()
