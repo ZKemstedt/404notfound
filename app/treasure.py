@@ -1,35 +1,34 @@
 class Treasure(object):
 
-    def __init__(self, value, appearance_rate):
+    def __init__(self, value):
         self.value = value
-        self.appearance_rate = appearance_rate
 
 
 class Coins(Treasure):
 
     def __init__(self):
-        super().__init__(2, 0.4)
+        super().__init__(2)
 
 
 class Pouch(Treasure):
 
     def __init__(self):
-        super().__init__(6, 0.2)
+        super().__init__(6)
 
 
 class GoldJewelry(Treasure):
 
     def __init__(self):
-        super().__init__(10, 0.15)
+        super().__init__(10)
 
 
 class Gemstone(Treasure):
 
     def __init__(self):
-        super().__init__(14, 0.1)
+        super().__init__(14)
 
 
 class SmallTreasureChest(Treasure):
 
     def __init__(self):
-        super().__init__(20, 0.05)
+        super().__init__(20)
