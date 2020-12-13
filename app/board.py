@@ -1,5 +1,7 @@
 from typing import Tuple
 from app.helpers import user_choice
+from app.monster import GiantSpider, Skeleton, Orc, Troll
+from app.treasure import Coins, Pouch, GoldJewelry, Gemstone, SmallTreasureChest
 import random
 
 BOARDSIZE = {
@@ -16,7 +18,7 @@ class Tile:
         self.explored = False
         self.player = None
         self.monsters = []
-        self.treasure = None
+        self.treasures = []
         self.exit = False
 
     def __str__(self) -> str:
@@ -31,14 +33,6 @@ class Tile:
 
     def place_character(self, player):
         self.player = player
-
-    # Not yet sure if this will be a method to Board or Tile.
-    def generate_monsters(self) -> None:  # TODO
-        pass
-
-    # Not yet sure if this will be a method to Board or Tile.
-    def generate_treasures(self) -> None:  # TODO
-        pass
 
     def exit_tile(self) -> bool:
         choices = [
@@ -62,6 +56,8 @@ class Board:
         self.sizey = y
         self.tiles = []
         self.generated_exit = False
+        self.generated_monsters = False
+        self.generated_treasures = False
 
         for col in range(x):
             rows = []
@@ -84,6 +80,8 @@ class Board:
     def get_tile(self, coordinates: Tuple[int, int]) -> Tile:
         try:
             x, y = coordinates
+            if x < 0 or y < 0:
+                return None
             tile = self.tiles[x][y]
         except IndexError:
             return None
@@ -100,17 +98,35 @@ class Board:
         else:
             print('The board already has an exit!')
 
+    def generate_monsters(self) -> None:
+        monster_list = {20: GiantSpider, 15: Skeleton, 10: Orc, 5: Troll}
+        if self.generated_monsters is False:
+            for row in self.tiles:
+                for tile in row:
+                    for rate, monster in monster_list.items():
+                        if random.randint(0, 100) <= rate:
+                            tile.monsters.append(monster())
+            self.generated_monsters = True
+        else:
+            print('The board already has monsters!')
+
+    def generate_treasures(self) -> None:
+        treasure_list = {40: Coins, 20: Pouch, 15: GoldJewelry, 10: Gemstone, 5: SmallTreasureChest}
+        if self.generated_treasures is False:
+            for row in self.tiles:
+                for tile in row:
+                    for item in treasure_list:
+                        for rate, treasure in treasure_list.items():
+                            if random.randint(0, 100) <= rate:
+                                tile.treasures.append(treasure())
+            self.generated_treasures = True
+        else:
+            print('The board already has treasures!')
+
 
 if __name__ == "__main__":
     board = Board(4, 4)
     print(board)
 
-    example_player = ':)'
-
-    tile = board.get_tile((0, 3))
-    tile.place_character(example_player)
-    print(board)
-
-    target = board.get_tile((1, 3))
-    target.place_character(example_player)
-    print(board)
+    board.generate_monster()
+    board.generate_treasure()

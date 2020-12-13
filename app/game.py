@@ -17,7 +17,7 @@ from typing import List, Union, Tuple
 from app.board import Board, Tile
 from app.monster import Monster
 from app.character import Character, Thief
-from app.helpers import user_choice, dice, who_starts_battle_dice
+from app.helpers import user_choice, dice
 
 
 GAME_OVER = """
@@ -68,44 +68,46 @@ def game_loop(board: Board, tile: Tile) -> bool:
     game_run = True
     while game_run:
         print(board)
-
         coordinates = player_move_menu(tile)
+
         # sudden Game Exit
         if coordinates is None:
             return False
         target = board.get_tile(coordinates)
+
         # out of bounds
         if target is None:
             print('You run into a wall, it hurt your head a bit but you\'ll survive.')
             continue
+
         # battle
         if target.monsters:
-            isalive = battle(player=tile.player, monsters=target.monsters)
+            print(f'[Control Flow] [Game Loop] encountered treasures: {target.monsters}')
+
+            print('[Control Flow] [Game Loop] (testing) skipping monsters')
+            # isalive = battle(player=tile.player, monsters=target.monsters)
+            target.monsters = []  # battle skip - testing
+            isalive = True  # battle skip - testing
             if not isalive:
                 game_over()
                 return False
             if target.monsters:  # player fled from battle
                 target.explored = True
                 continue
+
         # treasure
-        if target.treasure:
+        if target.treasures:
+            print(f'[Control Flow] [Game Loop] encountered treasures: {target.treasures}')
             sum_treasure(tile, target)
 
         # exit
         if target.exit:
-            print('[Control Flow] [Game Loop] target.exit')
+            print('[Control Flow] [Game Loop] encountered exit')
             # exit yes or no?
             # and then return True
 
         print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
         tile = move_player(tile, target)
-
-
-def sum_treasure(tile, target):
-    tile.player.treasure += target.treasure.value
-
-    print("treasure added")
-    target.treasure = None
 
 
 def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
@@ -164,22 +166,45 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
         bool: is the user still alive?
     """
 
+    # print(BATTLE_STARTED)
+    # time.sleep(2)
+        # roll dice on who starts the batttle
+    # roll_dice_player = dice(monsters[Monster].initiative)
+    # roll_dice_monster = dice(player.initiative)
+    # print('\n\nTime to roll the dice on who starts the battle!')
+    # time.sleep(1)
+    # print(f'\n{player}: {roll_dice_player}')
+    # time.sleep(1)
+    # print(f'{monsters[Monster]}: {roll_dice_monster}')
+
     print(BATTLE_STARTED)
     time.sleep(2)
+    fighters = {}
     # roll dice on who starts the batttle
-    roll_dice_player = dice(monsters[Monster].initiative)
-    roll_dice_monster = dice(player.initiative)
+    roll_dice_player = dice(player.initiative)
+    fighters.update({player: roll_dice_player})
+    for x in range(len(monsters)):
+        monster = monsters[x]
+        roll_dice_monster = dice(monster.initiative)
+        fighters.update({monster: roll_dice_monster})
+
+    print(fighters)
+
+    fighter_queue = sorted(fighters.items(), key=lambda x: x[1], reverse=True)
+
+    print(fighter_queue)
+
     print('\n\nTime to roll the dice on who starts the battle!')
     time.sleep(1)
     print(f'\n{player}: {roll_dice_player}')
     time.sleep(1)
-    print(f'{monsters[Monster]}: {roll_dice_monster}')
+    print(f'{monster}: {roll_dice_monster}')
 
     # - - - - - check vem som börjar - - - - -
     if roll_dice_monster > roll_dice_player:
-        print(f'Oops, {monsters[Monster]} starts the battle!')
+        print(f'Oops, {monster} starts the battle!')
         # monster attack, player defend
-        battle_attack(monsters[Monster], player)
+        battle_attack(monster, player)
     else:
         battle_loop = True
         while battle_loop:
@@ -188,10 +213,9 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
             choice = print_battle_menu(player, monsters)
             if choice == '1':
                 # player attack, monster defend
-                battle_attack(player, monsters[Monster])
+                battle_attack(player, monster)
             elif choice == '2':
                 # if choice 2 -> Flee
-                # check om spelare kan fly
                 flee_battle(player)
 
 
@@ -211,12 +235,15 @@ def print_battle_menu(player, monsters):  # need to align hp values
 
     monster_info = ''
     for monsterrr in monsters:
-        monster_info += str(monsterrr) + ' ' + str(monsterrr.health)
+        monster_info += f'{str(monsterrr)} {str(monsterrr.health)}'
 
         if (monsters.index(monsterrr) != len(monsters)-1):
             monster_info += '\n'
 
-    above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+    above = ('Name\tHealth\n'
+             '- - - - - - - - - -\n'
+             f'{player.name} {str(player.health)}\n'
+             f'{monster_info}\n- - - - - - - - - -')
 
     choices = [
         ('1', 'Attack'),
@@ -245,6 +272,18 @@ def battle_attack(attacker, defender) -> bool:
     else:
         print('Roll was unsucessfull\nAttack missed!\n')
     return True
+
+
+# ###################################################################
+#
+# Treasure
+#
+# ###################################################################
+def sum_treasure(tile, target):
+    for treasure in target.treasures:
+        print(f'[Control Flow] [sum_treasure] adding treasure {treasure}')
+        tile.player.treasures += treasure.value
+    target.treasures = []
 
 
 # ###################################################################
