@@ -231,6 +231,12 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
                 choice = print_battle_menu(player, monsters)
                 if choice == '1':  # player attack
                     choices = [(f'{i+1}', str(monster)) for i, monster in enumerate(monsters)]
+                    # longer version:
+                    # choices = []
+                    # c = 1
+                    # for monster in monsters:
+                    #     choice = (str(c), str(monster))  # resussing old variable names is not a problem
+                    #     choices.append(choice)
                     choice = user_choice(choices, above='Which monster to attack?')
                     monster = monsters[int(choice)-1]  # should maybe be the same monster object?
                     if not battle_attack(player, monster):  # monster died
