@@ -17,12 +17,12 @@ from typing import List, Union, Tuple
 try:
     from app.board import Board, Tile
     from app.monster import Monster
-    from app.character import Character, Thief
+    from app.character import Character, Thief, Knight
     from app.helpers import user_choice, dice
 except ModuleNotFoundError:
     from board import Board, Tile
     from monster import Monster
-    from character import Character, Thief
+    from character import Character, Thief, Knight
     from helpers import user_choice, dice
 
 
@@ -225,9 +225,10 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     print(BATTLE_STARTED)
     time.sleep(2)
     fighters = sorted(monsters + [player], key=lambda x: dice(x.initiative))
+    knight = player is Knight
     while True:
         for fighter in fighters:  # ensures the order of attackers
-            if fighter is player:  # does this work?
+            if fighter is player:
                 choice = print_battle_menu(player, monsters)
                 if choice == '1':  # player attack
                     choices = [(f'{i+1}', str(monster)) for i, monster in enumerate(monsters)]
@@ -238,19 +239,22 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
                     #     choice = (str(c), str(monster))  # resussing old variable names is not a problem
                     #     choices.append(choice)
                     choice = user_choice(choices, above='Which monster to attack?')
-                    monster = monsters[int(choice)-1]  # should maybe be the same monster object?
-                    if not battle_attack(player, monster):  # monster died
+                    monster = monsters[int(choice)-1]
+                    if not battle_attack(player, monster):  # ?: monster died
                         fighters.remove(monster)  # remove from fighters
                         monsters.remove(monster)  # remove from tile.monsters
-                        if len(fighters) == 1:  # all monsters dead
+                        if len(fighters) == 1:  # ?: all monsters dead
                             return True
                 else:
                     if flee_battle(player):
                         for monster in monsters:
-                            monster.reset()  # TODO
+                            monster.reset()
                         return True
             else:  # monster
-                if not battle_attack(fighter, player):  # player died
+                if knight:
+                    knight = False
+                    continue
+                if not battle_attack(fighter, player):  # ?: player died
                     return False
 
 
