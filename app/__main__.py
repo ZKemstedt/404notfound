@@ -229,6 +229,9 @@ if __name__ == "__main__":
 
         # setup board
         board, start_tile = setup_board(character)
+        board.generate_exit_tile()
+        board.generate_monsters()
+        board.generate_treasures()
 
         # run game
         is_win = game_loop(board, start_tile)
