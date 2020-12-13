@@ -8,7 +8,7 @@ class Character(object):
         self.health = health
         self.power = power
         self.evasion = evasion
-        self.treasure = treasure
+        self.treasures = treasure
 
     def special_power(self):
         raise NotImplementedError("Must be implemented!")
