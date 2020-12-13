@@ -55,32 +55,41 @@ def game_loop(board: Board, tile: Tile) -> bool:
     game_run = True
     while game_run:
         print(board)
-
         coordinates = player_move_menu(tile)
+
         # sudden Game Exit
         if coordinates is None:
             return False
         target = board.get_tile(coordinates)
+
         # out of bounds
         if target is None:
             print('You run into a wall, it hurt your head a bit but you\'ll survive.')
             continue
+
         # battle
         if target.monsters:
-            isalive = battle(player=tile.player, monsters=target.monsters)
+            print(f'[Control Flow] [Game Loop] encountered treasures: {target.monsters}')
+
+            print('[Control Flow] [Game Loop] (testing) skipping monsters')
+            # isalive = battle(player=tile.player, monsters=target.monsters)
+            target.monsters = []  # battle skip - testing
+            isalive = True  # battle skip - testing
             if not isalive:
                 game_over()
                 return False
             if target.monsters:  # player fled from battle
                 target.explored = True
                 continue
+
         # treasure
-        if target.treasure:
+        if target.treasures:
+            print(f'[Control Flow] [Game Loop] encountered treasures: {target.treasures}')
             sum_treasure(tile, target)
 
         # exit
         if target.exit:
-            print('[Control Flow] [Game Loop] target.exit')
+            print('[Control Flow] [Game Loop] encountered exit')
             # exit yes or no?
             # and then return True
 
@@ -207,10 +216,10 @@ def flee_battle(player: Character) -> bool:
 #
 # ###################################################################
 def sum_treasure(tile, target):
-    tile.player.treasure += target.treasure.value
-
-    print("treasure added")
-    target.treasure = None
+    for treasure in target.treasures:
+        print(f'[Control Flow] [sum_treasure] adding treasure {treasure}')
+        tile.player.treasures += treasure.value
+    target.treasures = []
 
 
 # ###################################################################
