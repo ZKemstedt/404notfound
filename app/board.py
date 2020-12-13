@@ -80,6 +80,8 @@ class Board:
     def get_tile(self, coordinates: Tuple[int, int]) -> Tile:
         try:
             x, y = coordinates
+            if x < 0 or y < 0:
+                return None
             tile = self.tiles[x][y]
         except IndexError:
             return None
