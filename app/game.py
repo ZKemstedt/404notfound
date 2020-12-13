@@ -106,8 +106,8 @@ def game_loop(board: Board, tile: Tile) -> bool:
         # exit
         if target.exit:
             print('[Control Flow] [Game Loop] encountered exit')
-            # exit yes or no?
-            # and then return True
+            if target.exit_tile():
+                return True
 
         print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
         tile = move_player(tile, target)
@@ -252,6 +252,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
                         return True
             else:  # monster
                 if knight:
+                    print(f'Knight blocked the hostile {monster}s attack!')
                     knight = False
                     continue
                 if not battle_attack(fighter, player):  # ?: player died
