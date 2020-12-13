@@ -88,13 +88,6 @@ def game_loop(board: Board, tile: Tile) -> bool:
         tile = move_player(tile, target)
 
 
-def sum_treasure(tile, target):
-    tile.player.treasure += target.treasure.value
-
-    print("treasure added")
-    target.treasure = None
-
-
 def player_move_menu(tile: Tile) -> Union[Tuple[int, int], None]:
     """[summary]
 
@@ -203,6 +196,18 @@ def flee_battle(player: Character) -> bool:
         return True
     print('You failed to escape.\n')
     return False
+
+
+# ###################################################################
+#
+# Treasure
+#
+# ###################################################################
+def sum_treasure(tile, target):
+    tile.player.treasure += target.treasure.value
+
+    print("treasure added")
+    target.treasure = None
 
 
 # ###################################################################
