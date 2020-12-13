@@ -67,8 +67,3 @@ def dice(n) -> int:
 
         dice_sum += b
     return dice_sum
-
-
-def who_starts_battle_dice():
-    dice_result = random.randint(1, 6)
-    return dice_result

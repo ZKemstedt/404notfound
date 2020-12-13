@@ -167,8 +167,8 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     print(BATTLE_STARTED)
     time.sleep(2)
     # roll dice on who starts the batttle
-    roll_dice_player = who_starts_battle_dice()
-    roll_dice_monster = who_starts_battle_dice()
+    roll_dice_player = dice(monsters[Monster].initiative)
+    roll_dice_monster = dice(player.initiative)
     print('\n\nTime to roll the dice on who starts the battle!')
     time.sleep(1)
     print(f'\n{player}: {roll_dice_player}')
