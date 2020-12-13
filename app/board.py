@@ -35,13 +35,13 @@ class Tile:
         self.player = player
 
     def exit_tile(self) -> bool:
-        choices = [
-            ('y', 'Leave and save'),
-            ('n', 'Stay and explore'),
-        ]
         if self.exit:
             print('You found the exit!\n')
             print('Do you want to leave?\n')
+            choices = [
+                ('y', 'Leave and save'),
+                ('n', 'Stay and explore'),
+            ]
             choice = user_choice(choices)
             if choice == 'y':
                 return True
