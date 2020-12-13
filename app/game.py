@@ -70,11 +70,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
         # battle
         if target.monsters:
             print(f'[Control Flow] [Game Loop] encountered treasures: {target.monsters}')
-
-            print('[Control Flow] [Game Loop] (testing) skipping monsters')
-            # isalive = battle(player=tile.player, monsters=target.monsters)
-            target.monsters = []  # battle skip - testing
-            isalive = True  # battle skip - testing
+            isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
                 game_over()
                 return False
