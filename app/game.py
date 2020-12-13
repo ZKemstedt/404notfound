@@ -150,12 +150,15 @@ def print_battle_menu(player, monsters):  # need to align hp values
 
     monster_info = ''
     for monsterrr in monsters:
-        monster_info += str(monsterrr) + ' ' + str(monsterrr.health)
+        monster_info += f'{str(monsterrr)} {str(monsterrr.health)}'
 
         if (monsters.index(monsterrr) != len(monsters)-1):
             monster_info += '\n'
 
-    above = 'Name\tHealth\n- - - - - - - - - -\n' + player.name + ' ' + str(player.health) + '\n' + monster_info + '\n- - - - - - - - - -'
+    above = ('Name\tHealth\n'
+             '- - - - - - - - - -\n'
+             f'{player.name} {str(player.health)}\n'
+             f'{monster_info}\n- - - - - - - - - -')
 
     choices = [
         ('1', 'Attack'),
