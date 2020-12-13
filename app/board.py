@@ -96,7 +96,7 @@ class Board:
         else:
             print('The board already has an exit!')
 
-    def generate_monster(self) -> None:
+    def generate_monsters(self) -> None:
         monster_list = {20: GiantSpider, 15: Skeleton, 10: Orc, 5: Troll}
         if self.generated_monsters is False:
             for row in self.tiles:
@@ -108,7 +108,7 @@ class Board:
         else:
             print('The board already has monsters!')
 
-    def generate_treasure(self) -> None:
+    def generate_treasures(self) -> None:
         treasure_list = {40: Coins, 20: Pouch, 15: GoldJewelry, 10: Gemstone, 5: SmallTreasureChest}
         if self.generated_treasures is False:
             for row in self.tiles:
