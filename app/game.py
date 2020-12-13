@@ -75,7 +75,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
                 target.explored = True
                 continue
         # treasure
-        if target.treasure:
+        if target.treasures:
             sum_treasure(tile, target)
 
         # exit
