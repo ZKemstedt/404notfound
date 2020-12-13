@@ -97,45 +97,26 @@ class Board:
             print('The board already has an exit!')
 
     def generate_monster(self) -> None:
-        monster_list = {'Giantspider': 20, 'Skeleton': 15, 'Orc': 10, 'Troll': 5}
+        monster_list = {20: GiantSpider, 15: Skeleton, 10: Orc, 5: Troll}
         if self.generated_monsters is False:
             for row in self.tiles:
                 for tile in row:
-                    for item in monster_list:
-                        random_roll = random.randint(0, 100)
-                        monster_percent = monster_list.get(item)
-                        if random_roll <= monster_percent:
-                            if item == 'Giantspider':
-                                tile.monsters.append(GiantSpider())
-                            elif item == 'Skeleton':
-                                tile.monsters.append(Skeleton())
-                            elif item == 'Orc':
-                                tile.monsters.append(Orc())
-                            elif item == 'Troll':
-                                tile.monsters.append(Troll())
+                    for rate, monster in monster_list.items():
+                        if random.randint(0, 100) <= rate:
+                            tile.monsters.append(monster())
             self.generated_monsters = True
         else:
             print('The board already has monsters!')
 
     def generate_treasure(self) -> None:
-        treasure_list = {'Coins': 40, 'Pouch': 20, 'GoldJewelry': 15, 'Gemstone': 10, 'SmallTreasureChest': 5}
+        treasure_list = {40: Coins, 20: Pouch, 15: GoldJewelry, 10: Gemstone, 5: SmallTreasureChest}
         if self.generated_treasures is False:
             for row in self.tiles:
                 for tile in row:
                     for item in treasure_list:
-                        random_roll = random.randint(0, 100)
-                        treasure_percent = treasure_list.get(item)
-                        if random_roll <= treasure_percent:
-                            if item == 'Coins':
-                                tile.treasures.append(Coins())
-                            elif item == 'Pouch':
-                                tile.treasures.append(Pouch())
-                            elif item == 'GoldJewelry':
-                                tile.treasures.append(GoldJewelry())
-                            elif item == 'Gemstone':
-                                tile.treasures.append(Gemstone())
-                            elif item == 'SmallTreasureChest':
-                                tile.treasures.append(SmallTreasureChest())
+                        for rate, treasure in treasure_list.items():
+                            if random.randint(0, 100) <= rate:
+                                tile.treasures.append(treasure())
             self.generated_treasures = True
         else:
             print('The board already has treasures!')
