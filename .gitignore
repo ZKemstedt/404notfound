@@ -1,0 +1,19 @@
+# virtual environments
+.env/
+.venv/
+.ENV/
+.VENV/
+venv
+
+# Mac OS Metadata File
+.DS_Storage
+
+# Caches
+.python_history
+__pycache__/
+
+# Windows Metadata file
+desktop.ini
+
+# VSCode lokal settings
+.vscode/settings.json
