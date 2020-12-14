@@ -83,8 +83,8 @@ def save_character(character: Character) -> None:
             ('2', 'No')
         ]
         header = f'There is already a saved character with the name {character.name}. Do you want to Overwrite?'
-        choice = user_choice(choices, above=header, exception='n')
-        if choice == 'n':
+        choice = user_choice(choices, above=header, exception='2')
+        if choice == '2':
             return
     data.update(character.export())
     write_yaml(data)

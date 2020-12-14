@@ -43,9 +43,9 @@ class Tile:
                 ('2', 'Stay and explore'),
             ]
             choice = user_choice(choices)
-            if choice == 'y':
+            if choice == '1':
                 return True
-            elif choice == 'n':
+            elif choice == '2':
                 # Optional: Add in main game_loop if false, put some marker on this tile (after player moved).
                 return False
 
