@@ -234,9 +234,9 @@ if __name__ == "__main__":
         board.generate_treasures()
 
         # run game
-        is_win = game_loop(board, start_tile)
-        if is_win:
+        character = game_loop(board, start_tile)
+        if character:
             # save character
-            save_character(board.get_character())
+            save_character(character)
 
     print('Thanks for playing :)')

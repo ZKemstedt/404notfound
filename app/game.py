@@ -107,7 +107,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
         if target.exit:
             print('[Control Flow] [Game Loop] encountered exit')
             if target.exit_tile():
-                return True
+                return tile.player
 
         print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
         tile = move_player(tile, target)
@@ -225,7 +225,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     print(BATTLE_STARTED)
     time.sleep(2)
     fighters = sorted(monsters + [player], key=lambda x: dice(x.initiative))
-    knight = player is Knight
+    knight = isinstance(player, Knight)
     while True:
         for fighter in fighters:  # ensures the order of attackers
             if fighter is player:
@@ -252,7 +252,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
                         return True
             else:  # monster
                 if knight:
-                    print(f'Knight blocked the hostile {monster}s attack!')
+                    print(f'Knight blocked the hostile {str(fighter).lower()}s attack!')
                     knight = False
                     continue
                 if not battle_attack(fighter, player):  # ?: player died
@@ -304,7 +304,7 @@ def battle_attack(attacker, defender) -> bool:
             defender.health -= 2
         else:
             defender.health -= 1
-            print('Dealth 1 damage')
+            print('Dealt 1 damage')
 
         if(defender.health == 0):
             print(f'{defender.name} has been slain\n')
