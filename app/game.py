@@ -88,7 +88,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
 
         # battle
         if target.monsters:
-            print(f'[Control Flow] [Game Loop] encountered monsters: {target.monsters}')
+            # print(f'[Control Flow] [Game Loop] encountered monsters: {target.monsters}')
 
             isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
@@ -100,16 +100,16 @@ def game_loop(board: Board, tile: Tile) -> bool:
 
         # treasure
         if target.treasures:
-            print(f'[Control Flow] [Game Loop] encountered treasures: {target.treasures}')
+            # print(f'[Control Flow] [Game Loop] encountered treasures: {target.treasures}')
             sum_treasure(tile, target)
 
         # exit
         if target.exit:
-            print('[Control Flow] [Game Loop] encountered exit')
+            # print('[Control Flow] [Game Loop] encountered exit')
             if target.exit_tile():
                 return tile.player
 
-        print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
+        # print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
         tile = move_player(tile, target)
 
 
@@ -168,88 +168,34 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     Returns:
         bool: is the user still alive?
     """
-
-    # print(BATTLE_STARTED)
-    # time.sleep(2)
-    # roll dice on who starts the batttle
-    # roll_dice_player = dice(monsters[Monster].initiative)
-    # roll_dice_monster = dice(player.initiative)
-    # print('\n\nTime to roll the dice on who starts the battle!')
-    # time.sleep(1)
-    # print(f'\n{player}: {roll_dice_player}')
-    # time.sleep(1)
-    # print(f'{monsters[Monster]}: {roll_dice_monster}')
-
-    # print(BATTLE_STARTED)
-    # time.sleep(2)
-    # fighters = {}
-    # # roll dice on who starts the batttle
-    # roll_dice_player = dice(player.initiative)
-    # fighters.update({player: roll_dice_player})
-    # for x in range(len(monsters)):
-    #     monster = monsters[x]
-    #     roll_dice_monster = dice(monster.initiative)
-    #     fighters.update({monster: roll_dice_monster})
-
-    # print(fighters)
-
-    # fighter_queue = sorted(fighters.items(), key=lambda x: x[1], reverse=True)
-
-    # print(fighter_queue)
-
-    # print('\n\nTime to roll the dice on who starts the battle!')
-    # time.sleep(1)
-    # print(f'\n{player}: {roll_dice_player}')
-    # time.sleep(1)
-    # print(f'{monster}: {roll_dice_monster}')
-
-    # # - - - - - check vem som börjar - - - - -
-    # if roll_dice_monster > roll_dice_player:
-    #     print(f'Oops, {monster} starts the battle!')
-    #     # monster attack, player defend
-    #     battle_attack(monster, player)
-    # else:
-    #     battle_loop = True
-    #     while battle_loop:
-    #         if battle(player) is None:
-    #             game_over()  # eller --> /return False ?
-    #         choice = print_battle_menu(player, monsters)
-    #         if choice == '1':
-    #             # player attack, monster defend
-    #             battle_attack(player, monster)
-    #         elif choice == '2':
-    #             # if choice 2 -> Flee
-    #             flee_battle(player)
-
-    # testing // Zeph
     print(BATTLE_STARTED)
     time.sleep(2)
     fighters = sorted(monsters + [player], key=lambda x: dice(x.initiative))
     knight = isinstance(player, Knight)
-    while True:
-        for fighter in fighters:  # ensures the order of attackers
+
+    while True:  # while battle
+        for fighter in fighters:  # per turn -> for each fighter, ensures the order of attackers
+
             if fighter is player:
                 choice = print_battle_menu(player, monsters)
+
                 if choice == '1':  # player attack
                     choices = [(f'{i+1}', str(monster)) for i, monster in enumerate(monsters)]
-                    # longer version:
-                    # choices = []
-                    # c = 1
-                    # for monster in monsters:
-                    #     choice = (str(c), str(monster))  # resussing old variable names is not a problem
-                    #     choices.append(choice)
                     choice = user_choice(choices, above='\nWhich monster to attack?')
                     monster = monsters[int(choice)-1]
+
                     if not battle_attack(player, monster):  # ?: monster died
                         fighters.remove(monster)  # remove from fighters
                         monsters.remove(monster)  # remove from tile.monsters
                         if len(fighters) == 1:  # ?: all monsters dead
                             return True
+
                 else:
                     if flee_battle(player):
                         for monster in monsters:
                             monster.reset()
                         return True
+
             else:  # monster
                 if knight:
                     print(f'Knight blocked the hostile {str(fighter).lower()}s attack!')
@@ -306,7 +252,7 @@ def battle_attack(attacker, defender) -> bool:
             defender.health -= 1
             print('~ Dealt 1 damage')
 
-        if(defender.health == 0):
+        if(defender.health <= 0):
             print(f'~ {defender.name} has been slain\n')
             return False
     else:
