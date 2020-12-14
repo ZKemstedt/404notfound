@@ -13,6 +13,8 @@ data_path = Path(FILENAME)
 
 def load_yaml() -> dict:
     try:
+        if not data_path.exists():
+            data_path.touch()
         with data_path.open(mode='r', encoding='UTF-8') as f:
             data = yaml.safe_load(f)
             return data
@@ -77,17 +79,22 @@ def save_character(character: Character) -> None:
         character (Character): The `Character` object to save
     """
     data = load_yaml()
-    if character.name in data.keys():
-        choices = [
-            ('1', 'Yes'),
-            ('2', 'No')
-        ]
-        header = f'There is already a saved character with the name {character.name}. Do you want to Overwrite?'
-        choice = user_choice(choices, above=header, exception='2')
-        if choice == '2':
-            return
-    data.update(character.export())
-    write_yaml(data)
+    try:
+        if character.name in data.keys():
+            choices = [
+                ('1', 'Yes'),
+                ('2', 'No')
+            ]
+            header = f'There is already a saved character with the name {character.name}. Do you want to Overwrite?'
+            choice = user_choice(choices, above=header, exception='2')
+            if choice == '2':
+                return
+        data.update(character.export())
+        write_yaml(data)
+
+    except AttributeError:
+        write_yaml(character.export())
+
 
 
 if __name__ == "__main__":
