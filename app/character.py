@@ -1,6 +1,3 @@
-import random
-
-
 class Character(object):
     def __init__(self, name, initiative, health, power, evasion, treasure=0):
         self.name = name
