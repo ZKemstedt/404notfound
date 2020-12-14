@@ -297,20 +297,20 @@ def battle_attack(attacker, defender) -> bool:
     print(f'{attacker.name} attacking!')
 
     if(dice(attacker.power) > dice(defender.evasion)):
-        print(f'{defender.name} was sucessfully hit!\n')
+        print(f'> {defender.name} was sucessfully hit!')
 
         if issubclass(attacker.__class__, Thief) and not random.randint(0, 3):
-            print('CRITICAL HIT! Dealt 2 damage')
+            print('> CRITICAL HIT! Dealt 2 damage')
             defender.health -= 2
         else:
             defender.health -= 1
-            print('Dealt 1 damage')
+            print('> Dealt 1 damage')
 
         if(defender.health == 0):
-            print(f'{defender.name} has been slain\n')
+            print(f'> {defender.name} has been slain\n')
             return False
     else:
-        print('Roll was unsucessfull\nAttack missed!\n')
+        print('> Attack missed!')
     print('')
     return True
 
