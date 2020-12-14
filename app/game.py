@@ -88,7 +88,7 @@ def game_loop(board: Board, tile: Tile) -> bool:
 
         # battle
         if target.monsters:
-            print(f'[Control Flow] [Game Loop] encountered treasures: {target.monsters}')
+            print(f'[Control Flow] [Game Loop] encountered monsters: {target.monsters}')
 
             isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
@@ -238,7 +238,7 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
                     # for monster in monsters:
                     #     choice = (str(c), str(monster))  # resussing old variable names is not a problem
                     #     choices.append(choice)
-                    choice = user_choice(choices, above='Which monster to attack?')
+                    choice = user_choice(choices, above='\nWhich monster to attack?')
                     monster = monsters[int(choice)-1]
                     if not battle_attack(player, monster):  # ?: monster died
                         fighters.remove(monster)  # remove from fighters
@@ -294,23 +294,23 @@ def print_battle_menu(player, monsters):  # need to align hp values
 
 
 def battle_attack(attacker, defender) -> bool:
-    print(f'{attacker.name} attacking!')
+    print(f'\n{attacker.name} attacking!')
 
     if(dice(attacker.power) > dice(defender.evasion)):
-        print(f'> {defender.name} was sucessfully hit!')
+        print(f'~ {defender.name} was sucessfully hit!')
 
         if issubclass(attacker.__class__, Thief) and not random.randint(0, 3):
-            print('> CRITICAL HIT! Dealt 2 damage')
+            print('~ CRITICAL HIT! Dealt 2 damage')
             defender.health -= 2
         else:
             defender.health -= 1
-            print('> Dealt 1 damage')
+            print('~ Dealt 1 damage')
 
         if(defender.health == 0):
-            print(f'> {defender.name} has been slain\n')
+            print(f'~ {defender.name} has been slain\n')
             return False
     else:
-        print('> Attack missed!')
+        print('~ Attack missed!')
     print('')
     return True
 
