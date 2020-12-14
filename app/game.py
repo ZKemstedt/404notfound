@@ -294,7 +294,7 @@ def print_battle_menu(player, monsters):  # need to align hp values
 
 
 def battle_attack(attacker, defender) -> bool:
-    print(f'{attacker.name} attacking!\n')
+    print(f'{attacker.name} attacking!')
 
     if(dice(attacker.power) > dice(defender.evasion)):
         print(f'{defender.name} was sucessfully hit!\n')
@@ -311,6 +311,7 @@ def battle_attack(attacker, defender) -> bool:
             return False
     else:
         print('Roll was unsucessfull\nAttack missed!\n')
+    print('')
     return True
 
 
@@ -321,7 +322,7 @@ def battle_attack(attacker, defender) -> bool:
 # ###################################################################
 def sum_treasure(tile, target):
     for treasure in target.treasures:
-        print(f'[Control Flow] [sum_treasure] adding treasure {treasure}')
+        # print(f'[Control Flow] [sum_treasure] adding treasure {treasure}')
         tile.player.treasures += treasure.value
     target.treasures = []
 
