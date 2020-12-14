@@ -39,8 +39,8 @@ class Tile:
             print('You found the exit!\n')
             print('Do you want to leave?\n')
             choices = [
-                ('y', 'Leave and save'),
-                ('n', 'Stay and explore'),
+                ('1', 'Leave and save'),
+                ('2', 'Stay and explore'),
             ]
             choice = user_choice(choices)
             if choice == 'y':
@@ -85,7 +85,7 @@ class Board:
             tile = self.tiles[x][y]
         except IndexError:
             return None
-        print(f'[Control Flow] [Board] get_tile(({x},{y}))')
+        # print(f'[Control Flow] [Board] get_tile(({x},{y}))')
         return tile
 
     def generate_exit_tile(self) -> None:
@@ -115,10 +115,9 @@ class Board:
         if self.generated_treasures is False:
             for row in self.tiles:
                 for tile in row:
-                    for item in treasure_list:
-                        for rate, treasure in treasure_list.items():
-                            if random.randint(0, 100) <= rate:
-                                tile.treasures.append(treasure())
+                    for rate, treasure in treasure_list.items():
+                        if random.randint(0, 100) <= rate:
+                            tile.treasures.append(treasure())
             self.generated_treasures = True
         else:
             print('The board already has treasures!')
