@@ -14,10 +14,16 @@ import random
 import time
 from typing import List, Union, Tuple
 
-from app.board import Board, Tile
-from app.monster import Monster
-from app.character import Character, Thief
-from app.helpers import user_choice, dice
+try:
+    from app.board import Board, Tile
+    from app.monster import Monster
+    from app.character import Character, Thief, Knight
+    from app.helpers import user_choice, dice
+except ModuleNotFoundError:
+    from board import Board, Tile
+    from monster import Monster
+    from character import Character, Thief, Knight
+    from helpers import user_choice, dice
 
 
 GAME_OVER = """
@@ -35,6 +41,19 @@ GAME_OVER = """
              \\_____/     \\__/     |_______| |__|   \\__| |__|
 
         """
+
+BATTLE_STARTED = """
+                 ____    _  _____ _____ _     _____
+                | __ )  / \\|_   _|_   _| |   | ____|
+                |  _ \\ / _ \\ | |   | | | |   |  _|
+                | |_) / ___ \\| |   | | | |___| |___
+              __|____/_/  _\\_\\_|___|_|_|_____|_____|   _
+            / ___|_   _|/ \\  |  _ \\_   _| ____|  _ \\  | |
+            \\___ \\ | | / _ \\ | |_) || | |  _| | | | | | |
+             ___) || |/ ___ \\|  _ < | | | |___| |_| | |_|
+            |____/ |_/_/   \\_\\_| \\_\\|_| |_____|____/  (_)
+
+            """
 
 
 # ###################################################################
@@ -69,7 +88,12 @@ def game_loop(board: Board, tile: Tile) -> bool:
 
         # battle
         if target.monsters:
-            print(f'[Control Flow] [Game Loop] encountered treasures: {target.monsters}')
+<<<<<<< HEAD
+            # print(f'[Control Flow] [Game Loop] encountered monsters: {target.monsters}')
+
+=======
+            print(f'[Control Flow] [Game Loop] encountered monsters: {target.monsters}')
+>>>>>>> fac566af750b43d93771308fb6dc266aaac996b1
             isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
                 game_over()
@@ -80,16 +104,16 @@ def game_loop(board: Board, tile: Tile) -> bool:
 
         # treasure
         if target.treasures:
-            print(f'[Control Flow] [Game Loop] encountered treasures: {target.treasures}')
+            # print(f'[Control Flow] [Game Loop] encountered treasures: {target.treasures}')
             sum_treasure(tile, target)
 
         # exit
         if target.exit:
-            print('[Control Flow] [Game Loop] encountered exit')
-            # exit yes or no?
-            # and then return True
+            # print('[Control Flow] [Game Loop] encountered exit')
+            if target.exit_tile():
+                return tile.player
 
-        print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
+        # print(f'[Control Flow] [Game Loop] move_player(({tile.x}, {tile.y}), ({target.x}, {target.y}))')
         tile = move_player(tile, target)
 
 
@@ -148,7 +172,53 @@ def battle(player: Character, monsters: List[Monster]) -> bool:
     Returns:
         bool: is the user still alive?
     """
-    pass
+    print(BATTLE_STARTED)
+    time.sleep(2)
+    fighters = sorted(monsters + [player], key=lambda x: dice(x.initiative))
+    knight = isinstance(player, Knight)
+
+    while True:  # while battle
+        for fighter in fighters:  # per turn -> for each fighter, ensures the order of attackers
+
+            if fighter is player:
+                choice = print_battle_menu(player, monsters)
+
+                if choice == '1':  # player attack
+                    choices = [(f'{i+1}', str(monster)) for i, monster in enumerate(monsters)]
+                    choice = user_choice(choices, above='\nWhich monster to attack?')
+                    monster = monsters[int(choice)-1]
+
+                    if not battle_attack(player, monster):  # ?: monster died
+                        fighters.remove(monster)  # remove from fighters
+                        monsters.remove(monster)  # remove from tile.monsters
+                        if len(fighters) == 1:  # ?: all monsters dead
+                            return True
+
+                else:
+                    if flee_battle(player):
+                        for monster in monsters:
+                            monster.reset()
+                        return True
+
+            else:  # monster
+                if knight:
+                    print(f'Knight blocked the hostile {str(fighter).lower()}s attack!')
+                    knight = False
+                    continue
+                if not battle_attack(fighter, player):  # ?: player died
+                    return False
+
+
+def flee_battle(player: Character) -> bool:
+    flee_chance = player.evasion * 10
+    random_roll = random.randint(0, 100)
+    if player.__class__.__name__ == "Wizard":
+        flee_chance = 80
+    if flee_chance > random_roll:
+        print('You managed to escape!\n')
+        return True
+    print('You failed to escape.\n')
+    return False
 
 
 def print_battle_menu(player, monsters):  # need to align hp values
@@ -174,36 +244,25 @@ def print_battle_menu(player, monsters):  # need to align hp values
 
 
 def battle_attack(attacker, defender) -> bool:
-    print(f'{attacker.name} attacking!\n')
+    print(f'\n{attacker.name} attacking!')
 
     if(dice(attacker.power) > dice(defender.evasion)):
-        print(f'{defender.name} was sucessfully hit!\n')
+        print(f'~ {defender.name} was sucessfully hit!')
 
         if issubclass(attacker.__class__, Thief) and not random.randint(0, 3):
-            print('CRITICAL HIT! Dealt 2 damage')
+            print('~ CRITICAL HIT! Dealt 2 damage')
             defender.health -= 2
         else:
             defender.health -= 1
-            print('Dealth 1 damage')
+            print('~ Dealt 1 damage')
 
-        if(defender.health == 0):
-            print(f'{defender.name} has been slain\n')
+        if(defender.health <= 0):
+            print(f'~ {defender.name} has been slain\n')
             return False
     else:
-        print('Roll was unsucessfull\nAttack missed!\n')
+        print('~ Attack missed!')
+    print('')
     return True
-
-
-def flee_battle(player: Character) -> bool:
-    flee_chance = player.evasion * 10
-    random_roll = random.randint(0, 100)
-    if player.__class__.__name__ == "Wizard":
-        flee_chance = 80
-    if flee_chance > random_roll:
-        print('You managed to escape!\n')
-        return True
-    print('You failed to escape.\n')
-    return False
 
 
 # ###################################################################
@@ -213,7 +272,7 @@ def flee_battle(player: Character) -> bool:
 # ###################################################################
 def sum_treasure(tile, target):
     for treasure in target.treasures:
-        print(f'[Control Flow] [sum_treasure] adding treasure {treasure}')
+        # print(f'[Control Flow] [sum_treasure] adding treasure {treasure}')
         tile.player.treasures += treasure.value
     target.treasures = []
 

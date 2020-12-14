@@ -1,0 +1,24 @@
+Amir:
+  class: Thief
+  health: 4
+  treasure: 570
+Johan:
+  class: Thief
+  health: 4
+  treasure: 538
+Kazi:
+  class: Wizard
+  health: 2
+  treasure: 244
+Ludvig:
+  class: Wizard
+  health: 4
+  treasure: 124
+Marcus:
+  class: Knight
+  health: 1
+  treasure: 416
+Zephyro:
+  class: Knight
+  health: 8
+  treasure: 184

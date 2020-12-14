@@ -16,6 +16,9 @@ class GiantSpider(Monster):
     def __str__(self) -> str:
         return 'GiantSpider'
 
+    def reset(self):
+        self.health = 1
+
 
 class Skeleton(Monster):
 
@@ -24,6 +27,9 @@ class Skeleton(Monster):
 
     def __str__(self) -> str:
         return 'Skeleton'
+
+    def reset(self):
+        self.health = 2
 
 
 class Orc(Monster):
@@ -34,6 +40,9 @@ class Orc(Monster):
     def __str__(self) -> str:
         return 'Orc'
 
+    def reset(self):
+        self.health = 3
+
 
 class Troll(Monster):
 
@@ -42,3 +51,6 @@ class Troll(Monster):
 
     def __str__(self) -> str:
         return 'Troll'
+
+    def reset(self):
+        self.health = 4

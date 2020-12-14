@@ -14,7 +14,7 @@ data_path = Path(FILENAME)
 def load_yaml() -> dict:
     try:
         with data_path.open(mode='r', encoding='UTF-8') as f:
-            data = yaml.load(f)
+            data = yaml.safeload(f)
             return data
     except FileNotFoundError:
         print('File not found.')
@@ -79,8 +79,8 @@ def save_character(character: Character) -> None:
     data = load_yaml()
     if character.name in data.keys():
         choices = [
-            ('y', 'Yes'),
-            ('n', 'No')
+            ('1', 'Yes'),
+            ('2', 'No')
         ]
         header = f'There is already a saved character with the name {character.name}. Do you want to Overwrite?'
         choice = user_choice(choices, above=header, exception='n')
