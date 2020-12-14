@@ -1,7 +1,7 @@
 Amir:
   class: Thief
-  health: 5
-  treasure: 130
+  health: 4
+  treasure: 570
 Johan:
   class: Thief
   health: 4
