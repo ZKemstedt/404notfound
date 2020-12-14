@@ -45,14 +45,19 @@ def load_character(name: str) -> Union[Character, None]:
     """
     try:
         data = load_yaml()
+        if data is None:
+            print('No characters saved yet!')
+            return None
     except Exception as e:
         print(f'An error occured when trying to load data!\n {type(e)}: {e}')
         return None
-
-    char_data = data.get(name, None)
-    if char_data is None:
-        print(f'No character with the name {name} exist!')
-        return None
+    try:
+        char_data = data.get(name, None)
+        if char_data is None:
+            print(f'No character with the name {name} exist!')
+            return None
+    except Exception:
+        print(f'Something went wrong!')
 
     _class = char_data.get('class', None)
     _treasure = char_data.get('treasure', None)
