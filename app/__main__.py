@@ -67,7 +67,7 @@ def main_menu():
 # ###################################################################
 
 def setup_character(is_new: bool) -> Union[Character, None]:
-    print('[Control Flow] [Setup Character] setup_character')
+    # print('[Control Flow] [Setup Character] setup_character')
     name = enter_character_name()
     if is_new:
         choice = choose_character_type()
@@ -117,7 +117,7 @@ def choose_character_type():
 # ###################################################################
 def setup_board(character: Character) -> Tuple[Board, Tile]:
     """Game Flow - Setup Board"""
-    print('[Control Flow] [Main Menu] setup_board')
+    # print('[Control Flow] [Main Menu] setup_board')
     # board
     boardsize = select_board_size()
     board = Board(*boardsize)
