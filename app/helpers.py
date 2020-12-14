@@ -67,3 +67,12 @@ def dice(n) -> int:
 
         dice_sum += b
     return dice_sum
+
+
+def wait_user_continue(text: str = '') -> None:
+    input(text)
+    return
+
+
+def clear() -> None:
+    print('\n'*80)
