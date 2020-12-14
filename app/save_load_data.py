@@ -14,7 +14,7 @@ data_path = Path(FILENAME)
 def load_yaml() -> dict:
     try:
         with data_path.open(mode='r', encoding='UTF-8') as f:
-            data = yaml.safeload(f)
+            data = yaml.safe_load(f)
             return data
     except FileNotFoundError:
         print('File not found.')
