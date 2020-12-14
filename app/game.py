@@ -89,7 +89,6 @@ def game_loop(board: Board, tile: Tile) -> bool:
         # battle
         if target.monsters:
             print(f'[Control Flow] [Game Loop] encountered monsters: {target.monsters}')
-
             isalive = battle(player=tile.player, monsters=target.monsters)
             if not isalive:
                 game_over()

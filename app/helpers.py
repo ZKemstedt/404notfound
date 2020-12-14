@@ -1,5 +1,4 @@
 import random
-from random import randint
 from typing import List, Tuple, Optional
 
 
@@ -61,32 +60,6 @@ def user_choice(
                 print(error_string)
 
 
-def dice_sum(n: int = 1, s: int = 20) -> int:
-    """Throw `n`-amount of `s`-sided dices and return the sum
-
-    Args:
-        n (int): Amount of dices to throw, defautls to 1.
-        s (int): How many sides each dice has, defaults to 20.
-                 Dice are represented with incremental side values,
-                 so this also represents the max/min value of the dice
-
-    Returns:
-        int: The sum of the dice
-
-    Raises:
-        ValueError: If `n` is less than 0
-        ValueError: If `s` is 0
-    """
-    if not s:
-        raise ValueError('Dice cannot have 0 sides!')
-    if n < 0:
-        raise ValueError('Cannot throw less than 0 dices!')
-    if s < 0:
-        return sum(randint(s - 1, -1) for _ in range(n))
-    else:
-        return sum(randint(1, s) for _ in range(n))
-
-
 def dice(n) -> int:
     dice_sum = 0
     for x in range(n):
@@ -94,3 +67,12 @@ def dice(n) -> int:
 
         dice_sum += b
     return dice_sum
+
+
+def wait_user_continue(text: str = '') -> None:
+    input(text)
+    return
+
+
+def clear() -> None:
+    print('\n'*80)
